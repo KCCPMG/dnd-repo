@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Dragon's Hoard</h1>
+  <h5>A Repository for Official and Homebrew DnD 5e Content</h5>
+  <div class="container">
+    <form action="/login" method="POST">
+      {{ form.hidden_tag() }}
+      
+      {% for field in form %}
+        
+        {% if field.widget.input_type != 'hidden' %}
+          {% for error in field.errors %}
+            <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+          {{ field.label }}
+          {{ field }}
+        {% endif %}
+      
+      {% endfor %}
+
+      <button class="btn">Log In</button>
+
+    </form>
+  </div>
+
+  <div class="container">
+    <a href="/signup">
+      <button class="btn">Sign Up</button>
+    </a>
+  </div>
+{% endblock %}

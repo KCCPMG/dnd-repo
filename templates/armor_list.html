@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% block head_content %}
+<script src="/static/add_armor.js"></script>
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-auto">
+        <button class="btn btn-outline-dark toggle-armor-form-button">Add Armor</button>
+      </div>
+    </div>
+
+
+
+    <form id="armor-form-container" hidden action="/armor/new" method="POST">
+      {{ form.hidden_tag() }}
+
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.slug.label }}
+            </div>
+            <div class="col-auto">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">/armor/</span>
+                </div>
+                {{ form.slug(class="form-control") }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.name.label }}
+            </div>
+            <div class="col-auto">
+              {{ form.name(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.category.label }}
+            </div>
+            <div class="col-auto">
+              {{ form.category(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.ac_base.label }}
+            </div>
+            <div class="col-auto">
+              {{ form.ac_base(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      
+      <h5>Modifier Attributes</h5>
+      <div class="row">
+        <div class="col">
+          <div class="row d-flex justify-content-start">
+            <div class="col-auto">
+              {{ form.modifier_strength(class="form-control")}}
+            </div>
+            <div class="col-auto">
+              {{ form.modifier_strength.label }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row d-flex justify-content-start">
+            <div class="col-auto">
+              {{ form.modifier_dexterity(class="form-control")}}
+            </div>
+            <div class="col-auto">
+              {{ form.modifier_dexterity.label }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col">
+          <div class="row d-flex justify-content-start">
+            <div class="col-auto">
+              {{ form.modifier_constitution(class="form-control")}}
+            </div>
+            <div class="col-auto">
+              {{ form.modifier_constitution.label }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row d-flex justify-content-start">
+            <div class="col-auto">
+              {{ form.modifier_wisdom(class="form-control")}}
+            </div>
+            <div class="col-auto">
+              {{ form.modifier_wisdom.label }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="row d-flex justify-content-start">
+            <div class="col-auto">
+              {{ form.modifier_intelligence(class="form-control")}}
+            </div>
+            <div class="col-auto">
+              {{ form.modifier_intelligence.label }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row d-flex justify-content-start">
+            <div class="col-auto">
+              {{ form.modifier_charisma(class="form-control")}}
+            </div>
+            <div class="col-auto">
+              {{ form.modifier_charisma.label }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.max_modifier.label }}
+            </div>
+            <div class="col-auto">
+              {{ form.max_modifier(class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.strength_required.label }}
+            </div>
+            <div class="col-auto">
+              {{ form.strength_required(class="form-control")}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.cost_in_gp.label }}
+            </div>
+            <div class="col-auto">
+              {{ form.cost_in_gp(class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.weight.label }}
+            </div>
+            <div class="col-auto">
+              {{ form.weight(class="form-control")}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {{ form.stealth_disadvantage.label }}
+            </div>
+            <div class="col-auto">
+              {{ form.stealth_disadvantage(class="form-control")}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- {% for field in form %}
+        {% if field.widget.input_type != 'hidden' %}
+          <div class="row">
+            <div class="col-auto">
+              {{ field.label }}
+            </div>
+            <div class="col-auto">
+              {{ field }}
+            </div>
+          </div>
+          {% for error in field.errors %}
+            <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+        {% endif %}
+      {% endfor %} -->
+      <button class="btn btn-outline-dark" type="Submit">Create Armor!</button>
+    </form>
+
+
+
+    <h1>Armor - All</h1>
+    {% for armor in armors %}
+      <div class="container list-item">
+        <div class="row justify-content-between">
+          <div class="col-auto">
+            <h3>{{ armor['name'] }}</h3>
+          </div>
+          <div class="col-auto">
+            <a href="/armor/{{armor.slug}}">Page</a>
+            <button class="expand-button">Expand</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            {% if armor['author_user_id'] %}
+              Homebrew By {{ armor.author.username }}
+            {% else %}
+              Official Content
+            {% endif %}
+          </div>
+        </div>
+
+
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block head_content %}
+  <script src="/static/add_comment.js"></script>
+{% endblock %}
+{% block content %}
+  {% if armor %}
+    <div class="container list-item">
+      <h1>{{armor['name']}}</h1>
+      {% if armor.author_user_id %}
+        Homebrew by {{author.username}}
+      {% else %}
+        <div class="row">
+          <div class="col-auto">
+            Source: <a href="{{armor.document__slug}}">{{armor.document__title}}</a>
+          </div>
+          <div class="col-auto">
+            Legal: <a href="{{armor.document__license_url}}"> {{armor.document__license_url}} </a>
+          </div>
+        </div>
+      {% endif %}
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          Category: {{armor.category}}
+        </div>
+        <div class="col-auto">
+          AC: {{armor.ac_string}}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          Strength Required: {{armor.strength_requirement}}
+        </div>
+        <div class="col-auto">
+          Cost: {{armor.cost}}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          Weight: {{armor.weight}}
+        </div>        
+        <div class="col-auto">
+          Stealth Disadvantage: {{armor.stealth_disadvantage}}
+        </div>          
+      </div>
+
+    </div>
+  {% else %}
+    <h1>Armor not found</h1>
+  {% endif %}
+
+  
+  {% if g.user %}
+    <button class="toggle-comment-form-button btn btn-outline-dark">Add Comment</button>
+    <div id="comment-form-container" hidden class="container hidden-form-container">
+      <form method="POST" action="{{armor.slug}}/add-comment">
+        {{ comment_form.hidden_tag() }}
+
+        {{ comment_form.text.label }}
+        {{ comment_form.text(id="comment-textarea", class="form-control") }}
+        {% for error in comment_form.text.errors %}
+          <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+
+        <!-- {% for field in comment_form %}
+          {% if field.widget.input_type != 'hidden' %}
+            <div class="row">{{ field.label }}</div>
+            <div class="row">{{ field }}</div>
+          {% endif %}
+        {% endfor %} -->
+        <button class="form-control btn btn-outline-dark" type="submit">Comment</button>
+      </form>
+    </div>
+  {% else %}
+    <a href="/"><button>Log In to Add A Comment</button></a>
+  {% endif %}
+
+  {% if comments %}
+    <h1>Comments</h1>
+    {% for comment in comments %}
+      <div class="comment">
+        <p>{{ comment.author.username }}</p>
+        <p>{{ comment.posted_at}}</p>
+        <p>{{ comment.text }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <h1>No Comments</h1>
+  {% endif %}
+
+{% endblock %}
