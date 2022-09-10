@@ -1,16 +1,18 @@
-
 import os
 from unittest import TestCase
 from sqlalchemy import exc
 import requests
 
+
 from models import db, User, ArmorComment, WeaponComment, SpellComment, ClassComment, Armor, ArmorCategory, DamageType, WeaponDamageRoll, WeaponProperty, WeaponPropertyAssignment, WeaponCategory, Weapon, Attribute, DocumentSlug, DocumentTitle, DocumentLicenseURL, SpellComponent, ClassSpellSlugAssignment, ArchetypeSpellAssignment, MagicSchool, Spell, PlayerClass, WeaponProficiency, SavingThrow
+
+from tests.test_seed import run_test_seed
 
 os.environ['DATABASE_URL'] = "postgresql:///dnd-repo-test"
 
 from app import app
 
-# db.create_all()
+
 
 
 def delete_all():
@@ -133,11 +135,11 @@ class ArmorTest(TestCase):
 
 
   def setUp(self):
-    db.session.rollback()
+    # db.session.rollback()
     # delete_all()
-    db.drop_all()
-    db.create_all()
-    seed()
+    # db.drop_all()
+    # db.create_all()
+    run_test_seed()
     
     self.sample_user = User.create_user('sample@user.com','sampleuser', 'test123')
 

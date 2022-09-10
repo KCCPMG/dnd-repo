@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block head_content %}
+  <script src="/static/add_comment.js"></script>
+{% endblock %}
+{% block content %}
+  {% if spell %}
+    <div class="container list-item">
+      <h1>{{spell['name']}}</h1>
+      {% if spell.author_user_id %}
+        Homebrew by {{author.username}}
+      {% else %}
+        <div class="row">
+          <div class="col-auto">
+            Source: <a href="{{spell.document__slug}}">{{spell.document__title}}</a>
+          </div>
+          <div class="col-auto">
+            Legal: <a href="{{spell.document__license_url}}"> {{spell.document__license_url}} </a>
+          </div>
+        </div>
+      {% endif %}
+      <hr/>
+
+      <div class="row justify-content-between">
+        <div class="col">
+
+          {{spell.level}}
+        </div>
+        <div class="col">
+          {{spell.components}}
+        </div>
+      </div>
+      
+
+      <div class="row justify-content-between">
+        <div class="col">
+          Range: {{spell.spell_range}}
+        </div>        
+        <div class="col">
+          Material: {{spell.material}}
+        </div>          
+      </div>
+      
+      
+
+      
+      <div class="row justify-content-between">
+        <div class="col">
+          Concentration: {{spell.concentration}}
+        </div>        
+        <div class="col">
+          Ritual: {{spell.ritual}}
+        </div>          
+      </div>
+
+      <div class="row justify-content-between">
+        <div class="col">
+          Casting Time: {{spell.casting_time}}
+        </div>        
+        <div class="col">
+          Duration: {{spell.duration}}
+        </div>          
+      </div>
+
+      <div class="row justify-content-between">
+        <div class="col">
+          Range: {{spell.spell_range}}
+        </div>             
+        <div class="col">
+          Material: {{spell.material}}
+        </div>          
+      </div>
+
+      <div class="row justify-content-between">
+        <div class="col">
+          {% if spell.page %}
+            Page: {{spell.page}}
+          {% endif %}
+        </div>        
+        <div class="col">
+          {% if spell.circles %}
+            Circles: {{spell.circles}}
+          {% endif %}
+        </div>          
+      </div>
+      <hr/>
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          <h5>Description</h5>
+          {{spell.desc}}
+        </div>
+      </div>
+      <hr/>
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          <h5>At Higher Levels</h5>
+          {{spell.higher_level}}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          {# Weight: {{weapon.weight}} #}
+        </div>        
+        <div class="col-auto">
+          {# Stealth Disadvantage: {{armor.stealth_disadvantage}} #}
+        </div>          
+      </div>
+
+
+    </div>
+    {% include 'comment_button.jinja' %}
+
+
+    {% if comments %}
+      <h1>Comments</h1>
+        <div class="container comment-container">
+          {% for comment in comments %}
+            {% include 'rendered_comment.jinja' %}
+          {% endfor %}
+        </div>
+        
+    {% else %}
+      <h1>No Comments</h1>
+    {% endif %}
+
+  {% else %}
+    <h1>Spell not found</h1>
+  {% endif %}
+
+      
+
+
+{% endblock %}

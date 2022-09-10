@@ -1,6 +1,8 @@
+import email
+from click import password_option
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SelectField, SelectMultipleField, BooleanField, IntegerField, FloatField
-from wtforms.validators import DataRequired, Email, Length, URL, Optional
+from wtforms.validators import DataRequired, Email, Length, URL, Optional, EqualTo
 
 
 
@@ -20,8 +22,16 @@ class LoginForm(FlaskForm):
   """Login form."""
 
   username = StringField('Username', validators=[DataRequired()])
-  password = PasswordField('Password', validators=[Length(min=6)])
+  password = PasswordField('Password', validators=[Length(min=6, max=-1, message="password must be at least 6 characters")])
 
+
+class SignupForm(FlaskForm):
+  """Signup form."""
+
+  username = StringField('Username', validators=[DataRequired()])
+  email = StringField('E-mail', validators=[Email()])
+  password = PasswordField("Password", validators=[Length(min=6,  message="password must be at least 6 characters")])
+  confirm_password = PasswordField("Confirm Password", validators=[EqualTo('password', "Passwords must match")])
 
 class CommentForm(FlaskForm):
   """Form for Comments (across types)"""
@@ -40,8 +50,6 @@ class ArmorForm(FlaskForm):
 
   # modifier_attributes = SelectMultipleField("Ability Modifiers", choices=['Strength', 'Dexterity', 'Constitution', 'Wisdom', 'Intelligence', 'Charisma'])
 
-
-
   modifier_strength = BooleanField('Strength') 
   modifier_dexterity = BooleanField('Dexterity')
   modifier_constitution = BooleanField('Constitution')
@@ -59,3 +67,18 @@ class ArmorForm(FlaskForm):
   # document_title = SelectField("Document Reference", choices=["None", 'Systems Reference Document', 'Deep Magic for 5th Edition', 'Open5e OGL'])
   # document_license = SelectField("open5e legal reference", choices=['None', 'http://open5e.com/legal'])
 
+
+
+class WeaponForm(FlaskForm): 
+  slug = StringField("URL", validators=[DataRequired()])
+  name = StringField("Name")
+
+
+class SpellForm(FlaskForm): 
+  slug = StringField("URL", validators=[DataRequired()])
+  name = StringField("Name")
+
+
+class PlayerClassForm(FlaskForm):
+  slug = StringField("URL", validators=[DataRequired()])
+  name = StringField("Name")

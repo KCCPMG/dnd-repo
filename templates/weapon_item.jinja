@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block head_content %}
+  <script src="/static/add_comment.js"></script>
+{% endblock %}
+{% block content %}
+  {% if weapon %}
+    <div class="container list-item">
+      <h1>{{weapon['name']}}</h1>
+      {% if weapon.author_user_id %}
+        Homebrew by {{author.username}}
+      {% else %}
+        <div class="row">
+          <div class="col-auto">
+            Source: <a href="{{weapon.document__slug}}">{{weapon.document__title}}</a>
+          </div>
+          <div class="col-auto">
+            Legal: <a href="{{weapon.document__license_url}}"> {{weapon.document__license_url}} </a>
+          </div>
+        </div>
+      {% endif %}
+      <hr/>
+      <div class="row justify-content-between">
+        <div class="col">
+          Category: {{weapon.category}}
+        </div>
+        <div class="col">
+          Damage: {{weapon.damage}}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col">
+          Weapon Properties: 
+          {{",".join(weapon.properties)}}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col">
+          Weight: {{weapon.weight}}
+        </div>  
+        <div class="col">
+          Cost: {{weapon.cost}}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+             
+      </div>
+
+    </div>
+    {% include 'comment_button.jinja' %}
+
+
+    {% if comments %}
+      <h1>Comments</h1>
+        <div class="container comment-container">
+          {% for comment in comments %}
+            {% include 'rendered_comment.jinja' %}
+          {% endfor %}
+        </div>
+        
+    {% else %}
+      <h1>No Comments</h1>
+    {% endif %}
+
+  {% else %}
+    <h1>Weapon not found</h1>
+  {% endif %}
+
+      
+
+
+{% endblock %}

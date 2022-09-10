@@ -1,0 +1,18 @@
+<div class="row justify-content-md-center">
+  {% if g.user %}
+  <button class="toggle-comment-form-button btn btn-outline-dark">Add Comment</button>
+  <div id="comment-form-container" hidden class="container hidden-form-container">
+    <form method="POST" action="{{ form_action }}">
+      {{ comment_form.hidden_tag() }}
+      {{ comment_form.text.label }}
+      {{ comment_form.text(id="comment-textarea", class="form-control") }}
+      {% for error in comment_form.text.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+      <button class="form-control btn btn-outline-dark" type="submit">Comment</button>
+    </form>
+  </div>
+  {% else %}
+  <a href="/"><button>Log In to Add A Comment</button></a>
+  {% endif %}
+</div>

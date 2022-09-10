@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="row m-4 justify-content-md-center">
+    <h1>Create Account</h1>
+  </div>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    {% for field in form %}
+      {% if field.widget.input_type != 'hidden' %}
+        <div class="row justify-content-md-center">
+          <div class="col-3">
+            {{ field.label }}
+          </div>
+          <div class="col-6">
+            {{ field(class="form-control") }}
+          </div>
+        </div>
+        {% for error in field.errors %}
+          <div class="row">
+            <span class="text-danger">{{ error }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+    <div class="row justify-content-md-center m-2">
+      <button class="btn btn-outline-dark" type="submit">
+        Create
+      </button>
+    </div>
+  </form>
+
+
+
+
+
+
+{% endblock %}

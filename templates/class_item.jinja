@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block head_content %}
+  <script src="/static/add_comment.js"></script>
+{% endblock %}
+{% block content %}
+  {% if pc %}
+    <div class="container list-item">
+      <h1>{{pc['name']}}</h1>
+      {% if pc.author_user_id %}
+        Homebrew by {{author.username}}
+      {% else %}
+        <div class="row">
+          <div class="col-auto">
+            Source: <a href="{{pc.document__slug}}">{{pc.document__title}}</a>
+          </div>
+          <div class="col-auto">
+            Legal: <a href="{{pc.document__license_url}}"> {{pc.document__license_url}} </a>
+          </div>
+        </div>
+      {% endif %}
+      <hr/>
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          {# Category: {{armor.category}} #}
+        </div>
+        <div class="col-auto">
+          {# AC: {{armor.ac_string}} #}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          {# Strength Required: {{armor.strength_requirement}} #}
+        </div>
+        <div class="col-auto">
+          {# Cost: {{weapon.cost}} #}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col-auto">
+          {# Weight: {{weapon.weight}} #}
+        </div>        
+        <div class="col-auto">
+          {# Stealth Disadvantage: {{armor.stealth_disadvantage}} #}
+        </div>          
+      </div>
+
+    </div>
+    {% include 'comment_button.jinja' %}
+
+
+    {% if comments %}
+      <h1>Comments</h1>
+        <div class="container comment-container">
+          {% for comment in comments %}
+            {% include 'rendered_comment.jinja' %}
+          {% endfor %}
+        </div>
+        
+    {% else %}
+      <h1>No Comments</h1>
+    {% endif %}
+
+  {% else %}
+    <h1>Class not found</h1>
+  {% endif %}
+
+{% endblock %}

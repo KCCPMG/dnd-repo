@@ -28,6 +28,16 @@
           {% endif %}
         </a>
       </div>
+      <ul class="navbar-nav">
+
+        {% if g.user %}
+          <li>
+            <a class="nav-text nav-link" href="/logout">Logout</a>
+          </li>
+        {% endif %}
+      </ul>
+
+      </div>
     </div>
 
   </nav>

@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% block head_content %}
-  <script src="/static/add_armor.js"></script>
+  <script src="/static/add_spell.js"></script>
   <script src="/static/expand_detail.js"></script>
 {% endblock %}
 {% block content %}
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-auto">
-        <button class="btn btn-outline-dark toggle-armor-form-button">Add Armor</button>
+        <button class="btn btn-outline-dark toggle-spell-form-button">Add Spell</button>
       </div>
     </div>
 
 
 
-    <form id="armor-form-container" hidden action="/armor/new" method="POST">
+    <form id="spell-form-container" hidden action="/spells/new" method="POST">
       {{ form.hidden_tag() }}
 
       <div class="row">
@@ -47,20 +47,20 @@
         <div class="col">
           <div class="row">
             <div class="col-auto">
-              {{ form.category.label }}
+              {# {{ form.category.label }} #}
             </div>
             <div class="col-auto">
-              {{ form.category(class="form-control") }}
+              {# {{ form.category(class="form-control") }} #}
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row">
             <div class="col-auto">
-              {{ form.ac_base.label }}
+              {# {{ form.ac_base.label }} #}
             </div>
             <div class="col-auto">
-              {{ form.ac_base(class="form-control") }}
+              {# {{ form.ac_base(class="form-control") }} #}
             </div>
           </div>
         </div>
@@ -73,20 +73,20 @@
         <div class="col">
           <div class="row d-flex justify-content-start">
             <div class="col-auto">
-              {{ form.modifier_strength(class="form-control")}}
+              {# {{ form.modifier_strength(class="form-control")}} #}
             </div>
             <div class="col-auto">
-              {{ form.modifier_strength.label }}
+              {# {{ form.modifier_strength.label }} #}
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row d-flex justify-content-start">
             <div class="col-auto">
-              {{ form.modifier_dexterity(class="form-control")}}
+              {# {{ form.modifier_dexterity(class="form-control")}} #}
             </div>
             <div class="col-auto">
-              {{ form.modifier_dexterity.label }}
+              {# {{ form.modifier_dexterity.label }} #}
             </div>
           </div>
         </div>
@@ -97,20 +97,20 @@
         <div class="col">
           <div class="row d-flex justify-content-start">
             <div class="col-auto">
-              {{ form.modifier_constitution(class="form-control")}}
+              {# {{ form.modifier_constitution(class="form-control")}} #}
             </div>
             <div class="col-auto">
-              {{ form.modifier_constitution.label }}
+              {# {{ form.modifier_constitution.label }} #}
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row d-flex justify-content-start">
             <div class="col-auto">
-              {{ form.modifier_wisdom(class="form-control")}}
+              {# {{ form.modifier_wisdom(class="form-control")}} #}
             </div>
             <div class="col-auto">
-              {{ form.modifier_wisdom.label }}
+              {# {{ form.modifier_wisdom.label }} #}
             </div>
           </div>
         </div>
@@ -120,20 +120,20 @@
         <div class="col">
           <div class="row d-flex justify-content-start">
             <div class="col-auto">
-              {{ form.modifier_intelligence(class="form-control")}}
+              {# {{ form.modifier_intelligence(class="form-control")}} #}
             </div>
             <div class="col-auto">
-              {{ form.modifier_intelligence.label }}
+              {# {{ form.modifier_intelligence.label }} #}
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row d-flex justify-content-start">
             <div class="col-auto">
-              {{ form.modifier_charisma(class="form-control")}}
+              {# {{ form.modifier_charisma(class="form-control")}} #}
             </div>
             <div class="col-auto">
-              {{ form.modifier_charisma.label }}
+              {# {{ form.modifier_charisma.label }} #}
             </div>
           </div>
         </div>
@@ -145,43 +145,20 @@
         <div class="col">
           <div class="row">
             <div class="col-auto">
-              {{ form.max_modifier.label }}
+              {# {{ form.max_modifier.label }} #}
             </div>
             <div class="col-auto">
-              {{ form.max_modifier(class="form-control")}}
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row">
-            <div class="col-auto">
-              {{ form.strength_required.label }}
-            </div>
-            <div class="col-auto">
-              {{ form.strength_required(class="form-control")}}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="row">
-            <div class="col-auto">
-              {{ form.cost_in_gp.label }}
-            </div>
-            <div class="col-auto">
-              {{ form.cost_in_gp(class="form-control")}}
+              {# {{ form.max_modifier(class="form-control")}} #}
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row">
             <div class="col-auto">
-              {{ form.weight.label }}
+              {# {{ form.strength_required.label }} #}
             </div>
             <div class="col-auto">
-              {{ form.weight(class="form-control")}}
+              {# {{ form.strength_required(class="form-control")}} #}
             </div>
           </div>
         </div>
@@ -191,10 +168,33 @@
         <div class="col">
           <div class="row">
             <div class="col-auto">
-              {{ form.stealth_disadvantage.label }}
+              {# {{ form.cost_in_gp.label }} #}
             </div>
             <div class="col-auto">
-              {{ form.stealth_disadvantage(class="form-control")}}
+              {# {{ form.cost_in_gp(class="form-control")}} #}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {# {{ form.weight.label }} #}
+            </div>
+            <div class="col-auto">
+              {# {{ form.weight(class="form-control")}} #}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-auto">
+              {# {{ form.stealth_disadvantage.label }} #}
+            </div>
+            <div class="col-auto">
+              {# {{ form.stealth_disadvantage(class="form-control")}} #}
             </div>
           </div>
         </div>
@@ -215,27 +215,27 @@
           {% endfor %}
         {% endif %}
       {% endfor %} -->
-      <button class="btn btn-outline-dark" type="Submit">Create Armor!</button>
+      <button class="btn btn-outline-dark" type="Submit">Create Spell!</button>
     </form>
 
 
 
-    <h1>Armor - All</h1>
-    {% for armor in armors %}
+    <h1>Spells - All</h1>
+    {% for spell in spells %}
       <div class="container list-item">
         <div class="row justify-content-between">
           <div class="col-auto">
-            <h3>{{ armor['name'] }}</h3>
+            <h3>{{ spell['name'] }}</h3>
           </div>
           <div class="col-auto">
-            <a href="/armor/{{armor.slug}}">Page</a>
+            <a href="/spells/{{spell.slug}}">Page</a>
             <button class="toggle-expanded-view-button">Expand</button>
           </div>
         </div>
         <div class="row">
           <div class="col-auto">
-            {% if armor['author_user_id'] %}
-              Homebrew By {{ armor.author.username }}
+            {% if spell['author_user_id'] %}
+              Homebrew By {{ spell.author.username }}
             {% else %}
               Official Content
             {% endif %}
@@ -245,26 +245,26 @@
         <div class="expanded-detail" hidden>
           <div class="row justify-content-between">
             <div class="col-auto">
-              Category: {{armor.category}}
+              {# Category: {{armor.category}} #}
             </div>
             <div class="col-auto">
-              AC: {{armor.ac_string}}
-            </div>
-          </div>
-          <div class="row justify-content-between">
-            <div class="col-auto">
-              Strength Required: {{armor.strength_requirement}}
-            </div>
-            <div class="col-auto">
-              Cost: {{armor['cost']}}
+              {# AC: {{armor.ac_string}} #}
             </div>
           </div>
           <div class="row justify-content-between">
             <div class="col-auto">
-              Weight: {{armor.weight}}
+              {# Strength Required: {{armor.strength_requirement}} #}
+            </div>
+            <div class="col-auto">
+              {# Cost: {{armor['cost']}} #}
+            </div>
+          </div>
+          <div class="row justify-content-between">
+            <div class="col-auto">
+              {# Weight: {{armor.weight}} #}
             </div>        
             <div class="col-auto">
-              Stealth Disadvantage: {{armor.stealth_disadvantage}}
+              {# Stealth Disadvantage: {{armor.stealth_disadvantage}} #}
             </div>          
           </div>
         </div>

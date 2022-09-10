@@ -1,14 +1,1 @@
-{
-  "name": "Unarmored Defense (Monk)",
-  "slug": "unarmored-defense-monk",
-  "category": "Class Feature",
-  "document__slug": "wotc-srd",
-  "document__title": "Systems Reference Document",
-  "document__license_url": "http://open5e.com/legal",
-  "ac_string": "10 + Dex modifier + Wis modifier",
-  "strength_requirement": null,
-  "cost": "0 gp",
-  "weight": "",
-  "stealth_disadvantage": false,
-  "author_user_id": null
-}
+{"name": "Unarmored Defense (Monk)", "slug": "unarmored-defense-monk", "category": "Class Feature", "document__slug": "wotc-srd", "document__title": "Systems Reference Document", "document__license_url": "http://open5e.com/legal", "ac_string": "10 + Dex modifier + Wis modifier", "strength_requirement": null, "cost": "0 gp", "weight": "", "stealth_disadvantage": false, "author_user_id": null}
