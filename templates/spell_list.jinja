@@ -244,28 +244,68 @@
 
         <div class="expanded-detail" hidden>
           <div class="row justify-content-between">
-            <div class="col-auto">
-              {# Category: {{armor.category}} #}
+            <div class="col">
+              {{spell.level}}
             </div>
-            <div class="col-auto">
-              {# AC: {{armor.ac_string}} #}
-            </div>
-          </div>
-          <div class="row justify-content-between">
-            <div class="col-auto">
-              {# Strength Required: {{armor.strength_requirement}} #}
-            </div>
-            <div class="col-auto">
-              {# Cost: {{armor['cost']}} #}
+            <div class="col">
+              Components: {{spell.components}}
             </div>
           </div>
+      
+
           <div class="row justify-content-between">
-            <div class="col-auto">
-              {# Weight: {{armor.weight}} #}
+            <div class="col">
+              Range: {{spell.spell_range if spell.spell_range else "N/A"}}
             </div>        
-            <div class="col-auto">
-              {# Stealth Disadvantage: {{armor.stealth_disadvantage}} #}
+            <div class="col">
+              Material: {{spell.material}}
             </div>          
+          </div>
+      
+          <div class="row justify-content-between">
+            <div class="col">
+              Concentration: {{spell.concentration}}
+            </div>        
+            <div class="col">
+              Ritual: {{spell.ritual}}
+            </div>          
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="col">
+              Casting Time: {{spell.casting_time}}
+            </div>        
+            <div class="col">
+              Duration: {{spell.duration}}
+            </div>          
+          </div>
+
+          <div class="row justify-content-between">
+            {% if spell.page %}
+              <div class="col">
+                  Page: {{spell.page}}
+              </div>        
+            {% endif %}
+            {% if spell.circles %}
+              <div class="col">
+                  Circles: {{spell.circles}}
+              </div>          
+            {% endif %}
+          </div>
+
+          <hr/>
+          <div class="row justify-content-between">
+            <div class="col-auto">
+              <h5>Description</h5>
+              {{spell.desc}}
+            </div>
+          </div>
+          <hr/>
+          <div class="row justify-content-between">
+            <div class="col-auto">
+              <h5>At Higher Levels</h5>
+              {{spell.higher_level}}
+            </div>
           </div>
         </div>
 

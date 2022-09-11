@@ -22,26 +22,22 @@
 
       <div class="row justify-content-between">
         <div class="col">
-
           {{spell.level}}
         </div>
         <div class="col">
-          {{spell.components}}
+          Components: {{spell.components}}
         </div>
       </div>
       
 
       <div class="row justify-content-between">
         <div class="col">
-          Range: {{spell.spell_range}}
+          Range: {{spell.spell_range if spell.spell_range else "N/A"}}
         </div>        
         <div class="col">
           Material: {{spell.material}}
         </div>          
       </div>
-      
-      
-
       
       <div class="row justify-content-between">
         <div class="col">
@@ -62,26 +58,18 @@
       </div>
 
       <div class="row justify-content-between">
-        <div class="col">
-          Range: {{spell.spell_range}}
-        </div>             
-        <div class="col">
-          Material: {{spell.material}}
-        </div>          
+        {% if spell.page %}
+          <div class="col">
+              Page: {{spell.page}}
+          </div>        
+        {% endif %}
+        {% if spell.circles %}
+          <div class="col">
+              Circles: {{spell.circles}}
+          </div>          
+        {% endif %}
       </div>
 
-      <div class="row justify-content-between">
-        <div class="col">
-          {% if spell.page %}
-            Page: {{spell.page}}
-          {% endif %}
-        </div>        
-        <div class="col">
-          {% if spell.circles %}
-            Circles: {{spell.circles}}
-          {% endif %}
-        </div>          
-      </div>
       <hr/>
       <div class="row justify-content-between">
         <div class="col-auto">
@@ -96,19 +84,10 @@
           {{spell.higher_level}}
         </div>
       </div>
-      <div class="row justify-content-between">
-        <div class="col-auto">
-          {# Weight: {{weapon.weight}} #}
-        </div>        
-        <div class="col-auto">
-          {# Stealth Disadvantage: {{armor.stealth_disadvantage}} #}
-        </div>          
-      </div>
-
 
     </div>
-    {% include 'comment_button.jinja' %}
 
+    {% include 'comment_button.jinja' %}
 
     {% if comments %}
       <h1>Comments</h1>
