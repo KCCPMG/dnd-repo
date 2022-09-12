@@ -1,7 +1,8 @@
 import email
+from unicodedata import category
 from click import password_option
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField, SelectField, SelectMultipleField, BooleanField, IntegerField, FloatField
+from wtforms import StringField, PasswordField, TextAreaField, SelectField, IntegerRangeField, BooleanField, IntegerField, FloatField
 from wtforms.validators import DataRequired, Email, Length, URL, Optional, EqualTo
 
 
@@ -15,6 +16,22 @@ def FloatOrNone(form, field):
   else:
     return
 
+# def RequirementDependency(form, field, comp_field):
+#   if comp_field.data:
+#     return DataRequired()(form, field)
+#   else:
+#     return Optional()(form, field)
+
+
+def RequirementDependency(comp_field):
+
+  def dependency_check(form, field):
+    if comp_field.data:
+      return DataRequired()(form, field)
+    else:
+      return Optional()(form, field)
+
+  return dependency_check
 
 ############ Forms ############
 
@@ -70,8 +87,60 @@ class ArmorForm(FlaskForm):
 
 
 class WeaponForm(FlaskForm): 
-  slug = StringField("URL", validators=[DataRequired()])
+  
+  slug = StringField("URL", validators=[DataRequired(message="Slug is required")])
   name = StringField("Name")
+  bonus = IntegerField("Bonus", validators=[Optional()])
+  weapon_category = SelectField("Weapon Category", choices=['Simple Melee Weapons', 'Simple Ranged Weapons', 'Martial Melee Weapons', 'Martial Ranged Weapons'])
+  cost_in_gp = FloatField("Cost (In Gold Points)", validators=[Optional()])
+  weight = FloatField("Weight (In lbs.)", validators=[Optional()])
+  
+  # weapon_properties
+  wp_ammunition = BooleanField("ammunition")
+  
+  # lower and upper bounds
+  ammo_range_lower_bound = IntegerField("Max Range", validators=[RequirementDependency(comp_field=wp_ammunition)])
+  ammo_range_upper_bound = IntegerField("With Disadvantage", validators=[RequirementDependency(comp_field=wp_ammunition)])
+
+  wp_finesse = BooleanField("finesse")
+  wp_heavy = BooleanField("heavy")
+  wp_light = BooleanField("light")
+  wp_loading = BooleanField("loading")
+  wp_reach = BooleanField("reach")
+  wp_special = BooleanField("special")
+  wp_two_handed = BooleanField("two handed")
+  
+  wp_thrown = BooleanField("thrown")
+  
+  # lower and upper bounds
+  thrown_range_lower_bound = IntegerField("Max Range", validators=[RequirementDependency(comp_field=wp_ammunition)])
+  thrown_range_upper_bound = IntegerField("With Disadvantage", validators=[RequirementDependency(comp_field=wp_ammunition)])
+
+  wp_versatile = BooleanField("versatile")
+  # alternate damage 
+
+
+
+  # damage rolls
+  first_weapon_damage_dice_no = IntegerField("No. of Dice", validators=[Optional()])
+  first_weapon_damage_die_sides = SelectField("Die Sides", choices=['', 2,4,6,8,10,12,20,100])
+  first_weapon_damage_flat_damage = IntegerField("Flat Damage", validators=[Optional()])
+  first_weapon_damage_type = SelectField("Damage Type", choices=['', 'bludgeoning', 'piercing', 'slashing', 'acid', 'poison', 'fire', 'cold', 'force', 'lightning', 'thunder', 'necrotic', 'psychic', 'radiant'])
+
+  second_weapon_damage_dice_no = IntegerField("No. of Dice", validators=[Optional()])
+  second_weapon_damage_die_sides = SelectField("Die Sides", choices=['',2,4,6,8,10,12,20,100])
+  second_weapon_damage_flat_damage = IntegerField("Flat Damage", validators=[Optional()])
+  second_weapon_damage_type = SelectField("Damage Type", choices=['', 'bludgeoning', 'piercing', 'slashing', 'acid', 'poison', 'fire', 'cold', 'force', 'lightning', 'thunder', 'necrotic', 'psychic', 'radiant'])
+
+  third_weapon_damage_dice_no = IntegerField("No. of Dice", validators=[Optional()])
+  third_weapon_damage_die_sides = SelectField("Die Sides", choices=['', 2,4,6,8,10,12,20,100])
+  third_weapon_damage_flat_damage = IntegerField("Flat Damage", validators=[Optional()])
+  third_weapon_damage_type = SelectField("Damage Type", choices=['', 'bludgeoning', 'piercing', 'slashing', 'acid', 'poison', 'fire', 'cold', 'force', 'lightning', 'thunder', 'necrotic', 'psychic', 'radiant'])
+
+
+
+
+
 
 
 class SpellForm(FlaskForm): 

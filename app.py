@@ -4,6 +4,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 import requests
 import os
 import json
+import markdown
 
 from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass
 from forms import CommentForm, LoginForm, ArmorForm, SignupForm, WeaponForm, SpellForm, PlayerClassForm
@@ -17,6 +18,10 @@ app.config['SECRET_KEY'] = 'temp_key'
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['SQLALCHEMY_ECHO']
+# app.jinja_env.lstrip_blocks = False
+# app.jinja_env.trim_blocks = False
+
+
 
 toolbar = DebugToolbarExtension(app)
 
@@ -427,11 +432,15 @@ def get_class(slug):
     comments.sort(reverse=True, key=get_comment_time)
     comment_form = CommentForm()
 
+  # import pdb
+  # pdb.set_trace()
+
   return render_template(
     'class_item.jinja',
     pc=pc,
     author=author,
     comments=comments,
     comment_form=comment_form,
-    form_action=f"/classes/{slug}/add-comment"
+    form_action=f"/classes/{slug}/add-comment",
+    markdown=markdown
   )

@@ -218,8 +218,6 @@
       <button class="btn btn-outline-dark" type="Submit">Create Spell!</button>
     </form>
 
-
-
     <h1>Spells - All</h1>
     {% for spell in spells %}
       <div class="container list-item">
@@ -251,7 +249,6 @@
               Components: {{spell.components}}
             </div>
           </div>
-      
 
           <div class="row justify-content-between">
             <div class="col">
@@ -288,7 +285,7 @@
             {% endif %}
             {% if spell.circles %}
               <div class="col">
-                  Circles: {{spell.circles}}
+                Circles: {{spell.circles}}
               </div>          
             {% endif %}
           </div>

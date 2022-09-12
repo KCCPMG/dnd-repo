@@ -20,31 +20,91 @@
       {% endif %}
       <hr/>
       <div class="row justify-content-between">
-        <div class="col-auto">
-          {# Category: {{armor.category}} #}
+        <div class="col">
+          Starting HP: {{pc.hp_at_1st_level}}
         </div>
-        <div class="col-auto">
-          {# AC: {{armor.ac_string}} #}
+        <div class="col">
+          Hit Die: {{pc.hit_dice}}
+        </div>
+      </div>
+      <hr/>
+      <h5>Proficiencies</h5>
+      <div class="row justify-content-between">
+        <div class="col">
+          Armor: {{pc.prof_armor}}
+        </div>
+        <div class="col">
+          Weapons: {{pc.prof_weapons}}
         </div>
       </div>
       <div class="row justify-content-between">
-        <div class="col-auto">
-          {# Strength Required: {{armor.strength_requirement}} #}
+        <div class="col">
+          Skills: {{pc.prof_skills | default("N/A")}}
         </div>
-        <div class="col-auto">
-          {# Cost: {{weapon.cost}} #}
+        <div class="col">
+          Tools: {{pc.prof_tools | default("N/A")}}
         </div>
       </div>
+
+      
+      
+
       <div class="row justify-content-between">
-        <div class="col-auto">
-          {# Weight: {{weapon.weight}} #}
-        </div>        
-        <div class="col-auto">
-          {# Stealth Disadvantage: {{armor.stealth_disadvantage}} #}
-        </div>          
+        <div class="col">
+          Starting Equipment: {{pc.equipment}}
+        </div>
+        <div class="col">
+          Subtypes Name: {{pc.subtypes_name}}                    
+        </div>
+      </div>
+
+      <div class="row justify-content-between">
+        <div class="col">
+          Saving Throws: {{pc.prof_saving_throws}}
+        </div>
+        <div class="col">
+          Spellcasting Ability: {{pc.spellcasting_ability | default("N/A")}}
+        </div>
+      </div>
+
+      <div class="row justify-content-between">
+        <div class="col">
+          
+        </div>
+        <div class="col">
+                       
+        </div>
+      </div>
+
+      <hr/>
+      <h5>Description</h5>
+      <div class="row justify-content-between">
+        <div class="col">
+          {# {% if 'markdown' is filter %}
+            {{pc.desc | markdown}}
+          {% else %}
+            Didn't work
+          {% endif %} #}
+          {{ markdown.markdown(pc.desc)}}
+        </div>
+      </div>
+      <hr/>
+      <h5>Table</h5>
+      <div class="row justify-content-between">
+        <div class="col">
+
+          {%+ for line in pc.table.split("\n") +%}
+            {{ line | replace(" ", "&nbsp;")}}
+            <br/>
+          {% endfor %}
+
+        </div>
       </div>
 
     </div>
+
+
+
     {% include 'comment_button.jinja' %}
 
 

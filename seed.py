@@ -885,7 +885,6 @@ db.session.add_all([
   WeaponProperty(name='heavy'),
   WeaponProperty(name='light'),
   WeaponProperty(name='loading'),
-  WeaponProperty(name='range'),
   WeaponProperty(name='reach'),
   WeaponProperty(name='special'),
   WeaponProperty(name='thrown (range 5/15)'),

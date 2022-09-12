@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block head_content %}
-  <script src="/static/add_armor.js"></script>
+  <script src="/static/add_weapon.js"></script>
   <script src="/static/expand_detail.js"></script>
 {% endblock %}
 {% block content %}
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-auto">
-        <button class="btn btn-outline-dark toggle-armor-form-button">
+        <button class="btn btn-outline-dark toggle-weapon-form-button m-4">
           Add Weapon
         </button>
       </div>
@@ -15,209 +15,406 @@
 
 
  
-    <form id="weapon-form-container" hidden action="/weapon/new" method="POST">
+    <form id="weapon-form-container" class="create-form-container" hidden action="/weapon/new" method="POST">
+
+      <h2>Create Weapon</h2>
+
       {{ form.hidden_tag() }}
 
-      <div class="row">
+      <div class="row m-2">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col align-self-center">
               {{ form.slug.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">/armor/</span>
+                  <span class="input-group-text">/weapons/</span>
                 </div>
                 {{ form.slug(class="form-control") }}
+                {% for error in field.errors %}
+                  <span class="text-danger">{{ error }}</span>
+                {% endfor %}
               </div>
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col align-self-center">
               {{ form.name.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.name(class="form-control") }}
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
+
+      <div class="row m-2">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
-              {# {{ form.category.label }} #}
+            <div class="col align-self-center">
+              {{ form.bonus.label }}
             </div>
-            <div class="col-auto">
-              {# {{ form.category(class="form-control") }} #}
+            <div class="col">
+              {{ form.bonus(class="form-control") }}
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row">
-            <div class="col-auto">
-              {# {{ form.ac_base.label }} #}
+            <div class="col align-self-center">
+              {{ form.weapon_category.label }}
             </div>
-            <div class="col-auto">
-              {# {{ form.ac_base(class="form-control") }} #}
+            <div class="col">
+              {{ form.weapon_category(class="form-control") }}
             </div>
           </div>
         </div>
       </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.cost_in_gp.label }}
+            </div>
+            <div class="col">
+              {{ form.cost_in_gp(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.weight.label }}
+            </div>
+            <div class="col">
+              {{ form.weight(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+      
 
       <hr/>
       
       <h5>Modifier Attributes</h5>
-      <div class="row">
+      
+      <div class="row m-2">
         <div class="col">
-          <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {# {{ form.modifier_strength(class="form-control")}} #}
+          <div class="row">
+            <div class="col">
+              {{form.wp_finesse.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.modifier_strength.label }} #}
+            <div class="col">
+              {{form.wp_finesse(class="form-control form-check")}}
             </div>
           </div>
         </div>
         <div class="col">
-          <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {# {{ form.modifier_dexterity(class="form-control")}} #}
+          <div class="row">
+            <div class="col">
+              {{form.wp_heavy.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.modifier_dexterity.label }} #}
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col">
-          <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {# {{ form.modifier_constitution(class="form-control")}} #}
-            </div>
-            <div class="col-auto">
-              {# {{ form.modifier_constitution.label }} #}
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {# {{ form.modifier_wisdom(class="form-control")}} #}
-            </div>
-            <div class="col-auto">
-              {# {{ form.modifier_wisdom.label }} #}
+            <div class="col">
+              {{form.wp_heavy(class="form-control form-check")}}
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row m-2">
         <div class="col">
-          <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {# {{ form.modifier_intelligence(class="form-control")}} #}
+          <div class="row">
+            <div class="col">
+              {{form.wp_light.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.modifier_intelligence.label }} #}
+            <div class="col">
+              {{form.wp_light(class="form-control form-check")}}
             </div>
           </div>
         </div>
         <div class="col">
-          <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {# {{ form.modifier_charisma(class="form-control")}} #}
+          <div class="row">
+            <div class="col">
+              {{form.wp_loading.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.modifier_charisma.label }} #}
+            <div class="col">
+              {{form.wp_loading(class="form-control form-check")}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.wp_reach.label}}
+            </div>
+            <div class="col">
+              {{form.wp_reach(class="form-control form-check")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.wp_special.label}}
+            </div>
+            <div class="col">
+              {{form.wp_special(class="form-control form-check")}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.wp_two_handed.label}}
+            </div>
+            <div class="col">
+              {{form.wp_two_handed(class="form-control form-check")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.wp_ammunition.label}}
+            </div>
+            <div class="col">
+              {{form.wp_ammunition(class="form-control form-check")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.ammo_range_lower_bound.label}}
+            </div>
+            <div class="col">
+              {{form.ammo_range_lower_bound(step=5,class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.ammo_range_upper_bound.label}}
+            </div>
+            <div class="col">
+              {{form.ammo_range_upper_bound(step=5,class="form-control")}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.wp_thrown.label}}
+            </div>
+            <div class="col">
+              {{form.wp_thrown(class="form-control form-check")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.thrown_range_lower_bound.label}}
+            </div>
+            <div class="col">
+              {{form.thrown_range_lower_bound(step=5,  class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.thrown_range_upper_bound.label}}
+            </div>
+            <div class="col">
+              {{form.thrown_range_upper_bound(step=5, class="form-control")}}
             </div>
           </div>
         </div>
       </div>
 
       <hr/>
+      <h5>Damage Rolls</h5>
 
-      <div class="row">
+      <h6>Roll 1</h6>
+      <div class="row m-2">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
-              {# {{ form.max_modifier.label }} #}
+            <div class="col">
+              {{form.first_weapon_damage_dice_no.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.max_modifier(class="form-control")}} #}
+            <div class="col">
+              {{form.first_weapon_damage_dice_no(class="form-control")}}
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row">
-            <div class="col-auto">
-              {# {{ form.strength_required.label }} #}
+            <div class="col">
+              {{form.first_weapon_damage_die_sides.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.strength_required(class="form-control")}} #}
+            <div class="col">
+              {{form.first_weapon_damage_die_sides(class="form-control")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.first_weapon_damage_flat_damage.label}}
+            </div>
+            <div class="col">
+              {{form.first_weapon_damage_flat_damage(class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.first_weapon_damage_type.label}}
+            </div>
+            <div class="col">
+              {{form.first_weapon_damage_type(class="form-control")}}
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
+      <h6>Roll 2</h6>
+      <div class="row m-2">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
-              {# {{ form.cost_in_gp.label }} #}
+            <div class="col">
+              {{form.second_weapon_damage_dice_no.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.cost_in_gp(class="form-control")}} #}
+            <div class="col">
+              {{form.second_weapon_damage_dice_no(class="form-control")}}
             </div>
           </div>
         </div>
         <div class="col">
           <div class="row">
-            <div class="col-auto">
-              {# {{ form.weight.label }} #}
+            <div class="col">
+              {{form.second_weapon_damage_die_sides.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.weight(class="form-control")}} #}
+            <div class="col">
+              {{form.second_weapon_damage_die_sides(class="form-control")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.second_weapon_damage_flat_damage.label}}
+            </div>
+            <div class="col">
+              {{form.second_weapon_damage_flat_damage(class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.second_weapon_damage_type.label}}
+            </div>
+            <div class="col">
+              {{form.second_weapon_damage_type(class="form-control")}}
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
+      <h6>Roll 3</h6>
+      <div class="row m-2">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
-              {# {{ form.stealth_disadvantage.label }} #}
+            <div class="col">
+              {{form.third_weapon_damage_dice_no.label}}
             </div>
-            <div class="col-auto">
-              {# {{ form.stealth_disadvantage(class="form-control")}} #}
+            <div class="col">
+              {{form.third_weapon_damage_dice_no(class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.third_weapon_damage_die_sides.label}}
+            </div>
+            <div class="col">
+              {{form.third_weapon_damage_die_sides(class="form-control")}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.third_weapon_damage_flat_damage.label}}
+            </div>
+            <div class="col">
+              {{form.third_weapon_damage_flat_damage(class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.third_weapon_damage_type.label}}
+            </div>
+            <div class="col">
+              {{form.third_weapon_damage_type(class="form-control")}}
             </div>
           </div>
         </div>
       </div>
 
-      <!-- {% for field in form %}
-        {% if field.widget.input_type != 'hidden' %}
-          <div class="row">
-            <div class="col-auto">
-              {{ field.label }}
-            </div>
-            <div class="col-auto">
-              {{ field }}
-            </div>
-          </div>
-          {% for error in field.errors %}
-            <span class="text-danger">{{ error }}</span>
-          {% endfor %}
-        {% endif %}
-      {% endfor %} 
-      <button class="btn btn-outline-dark" type="Submit">Create Armor!</button> -->
+
+
+
+
+
+
+      <div class="row justify-content-center">
+        <button class="btn btn-outline-dark" type="submit">
+          Create Weapon!
+        </button>
+      </div>
     </form> 
 
 
