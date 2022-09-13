@@ -23,7 +23,7 @@ def FloatOrNone(form, field):
 #     return Optional()(form, field)
 
 
-# not working, disable check later
+# not working, disable, check later
 def RequirementDependency(comp_field):
 
   def dependency_check(form, field):
@@ -105,21 +105,21 @@ class WeaponForm(FlaskForm):
   wp_loading = BooleanField("loading")
   wp_reach = BooleanField("reach")
   wp_special = BooleanField("special")
-  wp_two_handed = BooleanField("two handed")
+  wp_two_handed = BooleanField("two-handed")
   
   
   wp_ammunition = BooleanField("ammunition")
   
   # lower and upper bounds
-  ammo_range_lower_bound = IntegerField("Max Range", validators=[RequirementDependency(comp_field=wp_ammunition)])
-  ammo_range_upper_bound = IntegerField("With Disadvantage", validators=[RequirementDependency(comp_field=wp_ammunition)])
+  ammo_range_lower_bound = IntegerField("Max Range", validators=[Optional()])
+  ammo_range_upper_bound = IntegerField("With Disadvantage", validators=[Optional()])
   
   
   wp_thrown = BooleanField("thrown")
   
   # lower and upper bounds
-  thrown_range_lower_bound = IntegerField("Max Range", validators=[RequirementDependency(comp_field=wp_ammunition)])
-  thrown_range_upper_bound = IntegerField("With Disadvantage", validators=[RequirementDependency(comp_field=wp_ammunition)])
+  thrown_range_lower_bound = IntegerField("Max Range", validators=[Optional()])
+  thrown_range_upper_bound = IntegerField("With Disadvantage", validators=[Optional()])
 
   wp_versatile = BooleanField("versatile")
   # alternate damage 

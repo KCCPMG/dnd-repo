@@ -6,7 +6,7 @@ import os
 import json
 import markdown
 
-from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass, WeaponProperty
+from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass, WeaponProperty, WeaponCategory
 from forms import CommentForm, LoginForm, ArmorForm, SignupForm, WeaponForm, SpellForm, PlayerClassForm
 
 BASE_URL = 'https://api.open5e.com/'
@@ -313,14 +313,19 @@ def add_weapon():
       if not (form.ammo_range_lower_bound.data and form.ammo_range_upper_bound.data):
         flash("If setting the ammunition property, both range inputs must have valid input")
         valid = False
-      if form.ammo_range_lower_bound.data < 0:
-        flash("Range cannot be less than 0")
-        valid = False
-      if form.ammo_range_upper_bound.data < form.ammo_range_lower_bound.data:
-        flash("'With Disadvantage' range must be equal to or greater than the max range")
-        valid = False
+        
       if valid:
-        provisional_property = f'ammuntion (range {form.ammo_range_lower_bound}/{form.ammo_range_upper_bound})'
+        if form.ammo_range_lower_bound.data < 0:
+          flash("Range cannot be less than 0")
+          valid = False
+
+      if valid:
+        if form.ammo_range_upper_bound.data < form.ammo_range_lower_bound.data:
+          flash("'With Disadvantage' range must be equal to or greater than the max range")
+          valid = False
+
+      if valid:
+        provisional_property = f'ammuntion (range {form.ammo_range_lower_bound.data}/{form.ammo_range_upper_bound.data})'
 
         check = WeaponProperty.query.filter(WeaponProperty.name == provisional_property).all()
         if len(check) == 0:
@@ -365,18 +370,40 @@ def add_weapon():
         else:
           versatile_property = check[0]
     
-    
-    # other_modifiers = [form.]
+    # resolve all property ids
+    other_properties_text = [field.label.text for field in [form.wp_finesse, form.wp_heavy,form.wp_light, form.wp_loading, form.wp_reach, form.wp_special, form.wp_two_handed] if field.data]
 
+    other_properties = [WeaponProperty.query.filter(WeaponProperty.name == p_text).one() for p_text in other_properties_text]
+
+    all_properties = other_properties + [prop for prop in [ammo_property, versatile_property, thrown_property] if prop]
+    
+    import pdb
+    pdb.set_trace()
+
+    property_ids = [prop.id for prop in all_properties]
+
+    # get weapon category
+    weapon_category_id = WeaponCategory.query.filter(WeaponCategory.name)
 
     if valid is True:
       try:
-        pass
+        Weapon.create_weapon(
+          slug=form.slug.data,
+          name=form.name.data,
+          weapon_category=weapon_category_id,
+        )
+
+
       except:
         db.session.rollback()
     else:
       db.session.rollback()
       return redirect('/weapons')
+  else:
+    flash("failed validation")
+    for error in form.errors:
+      flash(error)
+    return redirect('/weapons')
 
 
 
