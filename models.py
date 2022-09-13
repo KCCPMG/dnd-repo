@@ -904,11 +904,13 @@ class WeaponDamageRoll(db.Model):
     try:
       DamageType.query.get(damage_type)
     except:
+      print(f"DamageType {damage_type} not found")
       raise exc.IntegrityError(f"DamageType {damage_type} not found")
 
     try:
       Weapon.query.get(weapon_slug)
     except:
+      print(f"Weapon {weapon_slug} not found")
       raise exc.IntegrityError(f"Weapon {weapon_slug} not found")
 
     weapon_damage_roll = WeaponDamageRoll(dice_no=dice_no,
@@ -1151,7 +1153,7 @@ class Weapon(db.Model):
           pass
         try:
           if damage_str and dr.flat_damage:
-            damage_str+=" "
+            damage_str+=" + "
             damage_str+=str(dr.flat_damage)
           elif dr.flat_damage:
             damage_str+=str(dr.flat_damage)
@@ -1229,8 +1231,9 @@ class Weapon(db.Model):
                                      damage_type=wdr['damage_type'],
                                      flat_damage=wdr['flat_damage'],
                                      weapon_slug=weapon.slug)
-      except:
+      except Exception as e:
         db.session.rollback()
+        raise e
         raise ValueError(f"Weapon Damage Roll {wdr} is invalid")
 
     if not type(weapon_property_assignments) is list:

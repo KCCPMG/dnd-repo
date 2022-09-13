@@ -6,7 +6,7 @@ import os
 import json
 import markdown
 
-from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass, WeaponProperty, WeaponCategory
+from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass, WeaponProperty, WeaponCategory, DamageType
 from forms import CommentForm, LoginForm, ArmorForm, SignupForm, WeaponForm, SpellForm, PlayerClassForm
 
 BASE_URL = 'https://api.open5e.com/'
@@ -376,14 +376,24 @@ def add_weapon():
     other_properties = [WeaponProperty.query.filter(WeaponProperty.name == p_text).one() for p_text in other_properties_text]
 
     all_properties = other_properties + [prop for prop in [ammo_property, versatile_property, thrown_property] if prop]
-    
-    import pdb
-    pdb.set_trace()
 
     property_ids = [prop.id for prop in all_properties]
 
     # get weapon category
-    weapon_category_id = WeaponCategory.query.filter(WeaponCategory.name)
+    weapon_category_id = WeaponCategory.query.filter(WeaponCategory.name==form.weapon_category.data).one().id
+
+    weapon_damage_rolls = []
+
+
+    if form.first_weapon_damage_dice_no:
+      damage_type_id = DamageType.query.filter(DamageType.name==form.first_weapon_damage_type.data).one().id
+      weapon_damage_rolls.append({
+        'dice_no': form.first_weapon_damage_dice_no.data,
+        'die_sides': int(form.first_weapon_damage_die_sides.data),
+        'damage_type': damage_type_id,
+        'flat_damage': form.first_weapon_damage_flat_damage.data,
+        'weapon_slug': form.slug.data
+      })
 
     if valid is True:
       try:
@@ -391,13 +401,32 @@ def add_weapon():
           slug=form.slug.data,
           name=form.name.data,
           weapon_category=weapon_category_id,
+          document__slug__id=None, 
+          document__title__id=None, 
+          document__license_url=None,
+          cost_in_gp=form.cost_in_gp.data,
+          weight=form.weight.data,
+          bonus=form.bonus.data,
+          author_user_id=g.user.id,
+          weapon_damage_rolls=weapon_damage_rolls,
+          weapon_property_assignments=property_ids
         )
 
+        db.session.commit()
+        flash("Weapon Created!")
+        return redirect("/weapons")
 
-      except:
-        db.session.rollback()
+
+      except Exception as e:
+        print(e)
+        flash("failed validation")
+        for error in form.errors:
+          flash(error)
+        return redirect('/weapons')
     else:
-      db.session.rollback()
+      flash("failed validation")
+      for error in form.errors:
+        flash(error)
       return redirect('/weapons')
   else:
     flash("failed validation")
