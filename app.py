@@ -6,7 +6,7 @@ import os
 import json
 import markdown
 
-from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass
+from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass, WeaponProperty
 from forms import CommentForm, LoginForm, ArmorForm, SignupForm, WeaponForm, SpellForm, PlayerClassForm
 
 BASE_URL = 'https://api.open5e.com/'
@@ -169,6 +169,7 @@ def add_armor():
       flash("URL is not unique")
       valid = False
 
+    # check armor category before proceeding
     category_id = None
     found_armor_cat_list = ArmorCategory.query.filter(ArmorCategory.name==form.category.data).all()
     if not found_armor_cat_list:
@@ -285,6 +286,98 @@ def get_weapons():
 
   form = WeaponForm(my_creation=True)
   return render_template('weapon_list.jinja', weapons=compat_weapons, form=form)
+
+
+@app.route('/weapons/new', methods=['POST'])
+def add_weapon():
+
+  form = WeaponForm()
+
+  if form.validate_on_submit():
+    valid = True
+
+    if requests.get(BASE_URL + f'weapons/{form.slug.data}'):
+      flash("URL is not unique")
+      valid = False
+    elif Weapon.query.get(form.slug.data):
+      flash("URL is not unique")
+      valid = False
+
+
+    ammo_property = None
+    thrown_property = None
+    versatile_property = None
+
+    # check ammunition properties before proceeding
+    if form.wp_ammunition.data:
+      if not (form.ammo_range_lower_bound.data and form.ammo_range_upper_bound.data):
+        flash("If setting the ammunition property, both range inputs must have valid input")
+        valid = False
+      if form.ammo_range_lower_bound.data < 0:
+        flash("Range cannot be less than 0")
+        valid = False
+      if form.ammo_range_upper_bound.data < form.ammo_range_lower_bound.data:
+        flash("'With Disadvantage' range must be equal to or greater than the max range")
+        valid = False
+      if valid:
+        provisional_property = f'ammuntion (range {form.ammo_range_lower_bound}/{form.ammo_range_upper_bound})'
+
+        check = WeaponProperty.query.filter(WeaponProperty.name == provisional_property).all()
+        if len(check) == 0:
+          ammo_property = WeaponProperty(name=provisional_property)
+          db.session.add(ammo_property)
+        else:
+          ammo_property = check[0]
+
+        
+    # check thrown properties before proceeding
+    if form.wp_thrown.data:
+      if not (form.thrown_range_lower_bound.data and form.thrown_range_upper_bound.data):
+        flash("If setting the thrown property, both range inputs must have valid input")
+        valid = False
+      if form.thrown_range_lower_bound.data < 0:
+        flash("Range cannot be less than 0")
+        valid = False
+      if form.thrown_range_upper_bound.data < form.thrown_range_lower_bound.data:
+        flash("'With Disadvantage' range must be equal to or greater than the max range")
+        valid = False
+      if valid:
+        provisional_property = f'ammuntion (range {form.thrown_range_lower_bound.data}/{form.thrown_range_upper_bound.data})'
+
+        check = WeaponProperty.query.filter(WeaponProperty.name == provisional_property).all()
+        if len(check) == 0:
+          thrown_property = WeaponProperty(name=provisional_property)
+        else:
+          thrown_property = check[0]
+
+
+    # check versatile properties before proceeding
+    if form.wp_versatile.data:
+      if not (form.versatile_dmg_dice_no.data and form.versatile_dmg_dice_sides.data):
+        valid = False
+        flash("If setting the versatile property, a complete damage dice roll must be included")
+      if valid:
+        provisional_property = f'versatile ({form.versatile_dmg_dice_no.data}d{form.versatile_dmg_dice_sides.data})'
+
+        check = WeaponProperty.query.filter(WeaponProperty.name == provisional_property).all()
+        if len(check) == 0:
+          versatile_property = WeaponProperty(name=provisional_property)
+        else:
+          versatile_property = check[0]
+    
+    
+    # other_modifiers = [form.]
+
+
+    if valid is True:
+      try:
+        pass
+      except:
+        db.session.rollback()
+    else:
+      db.session.rollback()
+      return redirect('/weapons')
+
 
 
 @app.route('/weapons/<slug>', methods=['GET'])

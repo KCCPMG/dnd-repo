@@ -23,6 +23,7 @@ def FloatOrNone(form, field):
 #     return Optional()(form, field)
 
 
+# not working, disable check later
 def RequirementDependency(comp_field):
 
   def dependency_check(form, field):
@@ -32,6 +33,9 @@ def RequirementDependency(comp_field):
       return Optional()(form, field)
 
   return dependency_check
+
+
+
 
 ############ Forms ############
 
@@ -80,27 +84,20 @@ class ArmorForm(FlaskForm):
   weight = FloatField("Weight (In lbs.)", validators=[Optional()])
   stealth_disadvantage = BooleanField("Stealth Disadvantage?")
   
-  # document_slug = SelectField("Document Reference Slug (For open5e.com)", choices=["None", 'wotc-srd', 'dmag', 'o5e'])
-  # document_title = SelectField("Document Reference", choices=["None", 'Systems Reference Document', 'Deep Magic for 5th Edition', 'Open5e OGL'])
-  # document_license = SelectField("open5e legal reference", choices=['None', 'http://open5e.com/legal'])
 
 
 
 class WeaponForm(FlaskForm): 
   
   slug = StringField("URL", validators=[DataRequired(message="Slug is required")])
-  name = StringField("Name")
+  name = StringField("Name", validators=[DataRequired()])
   bonus = IntegerField("Bonus", validators=[Optional()])
   weapon_category = SelectField("Weapon Category", choices=['Simple Melee Weapons', 'Simple Ranged Weapons', 'Martial Melee Weapons', 'Martial Ranged Weapons'])
   cost_in_gp = FloatField("Cost (In Gold Points)", validators=[Optional()])
   weight = FloatField("Weight (In lbs.)", validators=[Optional()])
   
   # weapon_properties
-  wp_ammunition = BooleanField("ammunition")
-  
-  # lower and upper bounds
-  ammo_range_lower_bound = IntegerField("Max Range", validators=[RequirementDependency(comp_field=wp_ammunition)])
-  ammo_range_upper_bound = IntegerField("With Disadvantage", validators=[RequirementDependency(comp_field=wp_ammunition)])
+
 
   wp_finesse = BooleanField("finesse")
   wp_heavy = BooleanField("heavy")
@@ -110,6 +107,14 @@ class WeaponForm(FlaskForm):
   wp_special = BooleanField("special")
   wp_two_handed = BooleanField("two handed")
   
+  
+  wp_ammunition = BooleanField("ammunition")
+  
+  # lower and upper bounds
+  ammo_range_lower_bound = IntegerField("Max Range", validators=[RequirementDependency(comp_field=wp_ammunition)])
+  ammo_range_upper_bound = IntegerField("With Disadvantage", validators=[RequirementDependency(comp_field=wp_ammunition)])
+  
+  
   wp_thrown = BooleanField("thrown")
   
   # lower and upper bounds
@@ -118,8 +123,8 @@ class WeaponForm(FlaskForm):
 
   wp_versatile = BooleanField("versatile")
   # alternate damage 
-
-
+  versatile_dmg_dice_no = IntegerField("No. of Dice", validators=[Optional()])
+  versatile_dmg_dice_sides = SelectField("Die Sides", choices=['', 2,4,6,8,10,12,20,100])
 
   # damage rolls
   first_weapon_damage_dice_no = IntegerField("No. of Dice", validators=[Optional()])

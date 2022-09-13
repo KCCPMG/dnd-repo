@@ -15,7 +15,7 @@
 
 
  
-    <form id="weapon-form-container" class="create-form-container" hidden action="/weapon/new" method="POST">
+    <form id="weapon-form-container" class="create-form-container" hidden action="/weapons/new" method="POST">
 
       <h2>Create Weapon</h2>
 
@@ -33,7 +33,7 @@
                   <span class="input-group-text">/weapons/</span>
                 </div>
                 {{ form.slug(class="form-control") }}
-                {% for error in field.errors %}
+                {% for error in form.slug.errors %}
                   <span class="text-danger">{{ error }}</span>
                 {% endfor %}
               </div>
@@ -258,6 +258,44 @@
             </div>
             <div class="col">
               {{form.thrown_range_upper_bound(step=5, class="form-control")}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.wp_versatile.label}}
+            </div>
+            <div class="col">
+              {{form.wp_versatile(class="form-control form-check")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.versatile_dmg_dice_no.label}}
+            </div>
+            <div class="col">
+              {{form.versatile_dmg_dice_no(class="form-control")}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              {{form.versatile_dmg_dice_sides.label}}
+            </div>
+            <div class="col">
+              {{form.versatile_dmg_dice_sides(step=5, class="form-control")}}
             </div>
           </div>
         </div>
