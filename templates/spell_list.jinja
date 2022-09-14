@@ -28,7 +28,7 @@
             <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">/weapons/</span>
+                  <span class="input-group-text">/spells/</span>
                 </div>
                 {{ form.slug(class="form-control") }}
                 {% for error in form.slug.errors %}
@@ -50,11 +50,171 @@
         </div>
       </div>
 
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.level.label }}
+            </div>
+            <div class="col">
+              {{ form.level(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.spell_range.label }}
+            </div>
+            <div class="col">
+              {{ form.spell_range(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.ritual.label }}
+            </div>
+            <div class="col">
+              {{ form.ritual(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.concentration.label }}
+            </div>
+            <div class="col">
+              {{ form.concentration(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.duration.label }}
+            </div>
+            <div class="col">
+              {{ form.duration(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.casting_time.label }}
+            </div>
+            <div class="col">
+              {{ form.casting_time(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.page.label }}
+            </div>
+            <div class="col">
+              {{ form.page(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.material.label }}
+            </div>
+            <div class="col">
+              {{ form.material(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.spell_component_v.label }}
+            </div>
+            <div class="col">
+              {{ form.spell_component_v(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.spell_component_s.label }}
+            </div>
+            <div class="col">
+              {{ form.spell_component_s(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.spell_component_m.label }}
+            </div>
+            <div class="col">
+              {{ form.spell_component_m(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+
+      <div class="row m-2">
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.magic_school.label }}
+            </div>
+            <div class="col">
+              {{ form.magic_school(class="form-control") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col align-self-center">
+              {{ form.circles.label }}
+            </div>
+            <div class="col">
+              {{ form.circles(class="form-control") }}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {{form.description.label}}
-      {{form.description}}
+      {{form.description(class="form-control")}}
+
+      {{form.higher_level.label}}
+      {{form.higher_level(class="form-control")}}
 
 
-      <button class="btn btn-outline-dark" type="Submit">Create Spell!</button>
+      <div class="row m-2 justify-content-center">
+        <button class="btn btn-outline-dark" type="Submit">
+          Create Spell!
+        </button>
+      </div>
     </form>
 
     <h1>Spells - All</h1>
