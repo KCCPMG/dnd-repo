@@ -23,7 +23,7 @@ nav {
   margin: 9px;
 }
 
-#comment-textarea, #description, #higher_level {
+#comment-textarea, #description, #higher_level, #table {
   height: 160px;
   resize: none;
 }

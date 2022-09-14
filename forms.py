@@ -164,9 +164,36 @@ class SpellForm(FlaskForm):
   spell_component_s = BooleanField("Somatic (S)")
   spell_component_m = BooleanField("Material (M)")
   
-  
 
 
 class PlayerClassForm(FlaskForm):
   slug = StringField("URL", validators=[DataRequired()])
   name = StringField("Name")
+  description = TextAreaField("Description (Markdown Compatible)", validators=[DataRequired()])
+  hit_die = SelectField("Hit Die (d:)", choices = [2, 4, 6, 8, 10, 12, 20, 100]) 
+  base_hp_at_1st_level = IntegerField("Base HP at 1st Level")
+  tool_proficiency = StringField("Proficient Tools")
+  skill_proficiency = StringField("Proficient Skills")
+  starting_equipment = StringField("Starting Equipment")
+  table = TextAreaField("Table")
+  spellcasting_ability = SelectField("Spellcasting Ability", choices=["Wisdom", "Intelligence", "Charisma"])
+  subtypes_name = StringField("Subtypes Name")
+  armor_proficiency_none = BooleanField("No Armor")
+  armor_proficiency_light = BooleanField("Light Armor")
+  armor_proficiency_medium = BooleanField("Medium Armor")
+  armor_proficiency_heavy = BooleanField("Heavy Armor")
+  armor_proficiency_spell = BooleanField("Spell")
+  armor_proficiency_class_feature = BooleanField("Class Feature")
+  armor_proficiency_shield = BooleanField("Shield")
+  prof_weapons = StringField("Weapons Proficiencies")
+   
+  saving_throw_str = BooleanField("Strength")
+  saving_throw_dex = BooleanField("Dexterity")
+  saving_throw_con = BooleanField("Constitution")
+  saving_throw_wis = BooleanField("Wisdom")
+  saving_throw_int = BooleanField("Intelligence")
+  saving_throw_cha = BooleanField("Charisma")
+
+  # Future feature to connect spells to a class
+  # homebrew_spell_slugs = 
+  # api_spell_slugs = 
