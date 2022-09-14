@@ -150,7 +150,7 @@ class SpellForm(FlaskForm):
   name = StringField("Name", validators=[DataRequired()])
   description = TextAreaField("Description")
   higher_level = TextAreaField("At Higher Levels")
-  page = IntegerField("Page")
+  page = IntegerField("Page", validators=[Optional()])
   spell_range = StringField("Range")
   material = StringField("Material")
   ritual = BooleanField("Ritual")

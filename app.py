@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from flask import Flask, redirect, jsonify, render_template, flash, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 import requests
@@ -6,7 +5,7 @@ import os
 import json
 import markdown
 
-from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass, WeaponProperty, WeaponCategory, DamageType
+from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass, WeaponProperty, WeaponCategory, DamageType, MagicSchool
 from forms import CommentForm, LoginForm, ArmorForm, SignupForm, WeaponForm, SpellForm, PlayerClassForm
 
 BASE_URL = 'https://api.open5e.com/'
@@ -523,6 +522,68 @@ def get_spells():
   form = SpellForm(my_creation=True)
   return render_template('spell_list.jinja', spells=spells, form=form)
 
+
+@app.route('/spells/new', methods=['POST'])
+def add_spell():
+  
+  form = SpellForm()
+
+  import pdb
+  pdb.set_trace()
+
+  if form.validate_on_submit():
+
+    if requests.get(BASE_URL + f'spells/{form.slug.data}'):
+      flash("URL is not unique")
+      return redirect("/spells")
+    elif Spell.query.get(form.slug.data):
+      flash("URL is not unique")
+      return redirect("/spells")
+
+    spell_components = []
+    if form.spell_component_v.data:
+      spell_components.append("V")
+    if form.spell_component_s.data:
+      spell_components.append("S")
+    if form.spell_component_m.data:
+      spell_components.append("M")
+
+
+    magic_school_id = MagicSchool.query.filter(MagicSchool.name == form.magic_school.data).one().id
+
+    try:
+      Spell.create_spell(slug=form.slug.data,
+                        name=form.name.data,
+                        description=form.description.data,
+                        higher_level=form.higher_level.data,
+                        page=form.page.data,
+                        spell_range=form.spell_range.data,
+                        material=form.material.data,
+                        ritual=form.ritual.data,
+                        duration=form.duration.data,
+                        concentration=form.concentration.data,
+                        casting_time=form.casting_time.data,
+                        level=form.level.data,
+                        magic_school=magic_school_id,
+                        document__slug__id=None,
+                        document__title__id=None,
+                        document__license_url=None,
+                        circles=form.circles.data,
+                        author_user_id=g.user.id,
+                        spell_components=spell_components,
+                        class_slug_spell_assignments=[],
+                        archetype_spell_assignments=[])
+      db.session.commit()
+      flash("Spell Created!")
+      return redirect("/spells")
+    except Exception as e:
+      print(e)
+      flash("Something went wrong")
+      return redirect("/spells")
+  else:
+    print(form.errors)
+    flash("Something went wrong")
+    return redirect("/spells")
 
 
 @app.route('/spells/<slug>', methods=['GET'])
