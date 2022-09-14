@@ -462,7 +462,7 @@
       <div class="container list-item">
         <div class="row justify-content-between">
           <div class="col-auto">
-            <h3>{{ weapon['name'] }}</h3>
+            <h3>{% if weapon['bonus'] %}{{weapon['bonus']}} {% endif %}{{weapon['name']}}</h3>
           </div>
           <div class="col-auto">
             <a href="/weapons/{{weapon.slug}}">Page</a>

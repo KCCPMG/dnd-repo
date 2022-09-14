@@ -1139,7 +1139,7 @@ class Weapon(db.Model):
     except:
       pass
 
-    main_damage_str = "this should be overwritten"
+    main_damage_str = ""
     try:
       dr_strings = []
       for dr in self.damage_rolls:
@@ -1170,6 +1170,16 @@ class Weapon(db.Model):
     except:
       pass
 
+    bonus_str = ""
+    try: 
+      if self.bonus:
+        if self.bonus > 0:
+          bonus_str = f"+ {self.bonus}"
+        else:
+          bonus_str = str(self.bonus)
+    except:
+      pass
+
     return json.dumps({
       "name": self.name,
       "slug": self.slug,
@@ -1182,6 +1192,7 @@ class Weapon(db.Model):
       "properties": properties_list,
       "author_user_id": self.author_user_id,
       "damage": main_damage_str,
+      "bonus": bonus_str
     })
 
   ############ Class Methods ############

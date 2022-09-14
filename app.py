@@ -385,13 +385,33 @@ def add_weapon():
     weapon_damage_rolls = []
 
 
-    if form.first_weapon_damage_dice_no:
+    if form.first_weapon_damage_dice_no.data or form.first_weapon_damage_flat_damage.data:
       damage_type_id = DamageType.query.filter(DamageType.name==form.first_weapon_damage_type.data).one().id
       weapon_damage_rolls.append({
         'dice_no': form.first_weapon_damage_dice_no.data,
         'die_sides': int(form.first_weapon_damage_die_sides.data),
         'damage_type': damage_type_id,
         'flat_damage': form.first_weapon_damage_flat_damage.data,
+        'weapon_slug': form.slug.data
+      })
+
+    if form.second_weapon_damage_dice_no.data or form.second_weapon_damage_flat_damage.data:
+      damage_type_id = DamageType.query.filter(DamageType.name==form.second_weapon_damage_type.data).one().id
+      weapon_damage_rolls.append({
+        'dice_no': form.second_weapon_damage_dice_no.data,
+        'die_sides': int(form.second_weapon_damage_die_sides.data),
+        'damage_type': damage_type_id,
+        'flat_damage': form.second_weapon_damage_flat_damage.data,
+        'weapon_slug': form.slug.data
+      })
+
+    if form.third_weapon_damage_dice_no.data or form.third_weapon_damage_flat_damage.data:
+      damage_type_id = DamageType.query.filter(DamageType.name==form.third_weapon_damage_type.data).one().id
+      weapon_damage_rolls.append({
+        'dice_no': form.third_weapon_damage_dice_no.data,
+        'die_sides': int(form.third_weapon_damage_die_sides.data),
+        'damage_type': damage_type_id,
+        'flat_damage': form.third_weapon_damage_flat_damage.data,
         'weapon_slug': form.slug.data
       })
 

@@ -5,7 +5,7 @@
 {% block content %}
   {% if weapon %}
     <div class="container list-item">
-      <h1>{{weapon['name']}}</h1>
+      <h1>{% if weapon['bonus'] %}{{weapon['bonus']}} {% endif %}{{weapon['name']}}</h1>
       {% if weapon.author_user_id %}
         Homebrew by {{author.username}}
       {% else %}
