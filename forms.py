@@ -145,12 +145,26 @@ class WeaponForm(FlaskForm):
 
 
 
-
-
-
 class SpellForm(FlaskForm): 
   slug = StringField("URL", validators=[DataRequired()])
-  name = StringField("Name")
+  name = StringField("Name", validators=[DataRequired()])
+  description = TextAreaField("Description")
+  higher_level = TextAreaField("At Higher Levels")
+  page = IntegerField("Page")
+  spell_range = StringField("Range")
+  material = StringField("Material")
+  ritual = BooleanField("Ritual")
+  duration = StringField("Duration")
+  concentration = BooleanField("Concentration")
+  casting_time = StringField("Casting Time")
+  level = IntegerField("Level")
+  magic_school = SelectField("Magic School", choices=["illusion", "transmutation", "conjuration", "necromancy", "evocation", "abjuration", "enchantment", "divination"])
+  circles = StringField("Circles")
+  spell_component_v = BooleanField("Verbal (V)")
+  spell_component_s = BooleanField("Somatic (S)")
+  spell_component_m = BooleanField("Material (M)")
+  
+  
 
 
 class PlayerClassForm(FlaskForm):
