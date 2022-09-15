@@ -30,6 +30,11 @@
                   <span class="input-group-text">/armor/</span>
                 </div>
                 {{ form.slug(class="form-control") }}
+                {% for error in form.slug.errors %}
+                  <span class="text-danger">
+                    {{error}}
+                  </span>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -41,6 +46,11 @@
             </div>
             <div class="col-auto">
               {{ form.name(class="form-control") }}
+              {% for error in form.name.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -53,6 +63,11 @@
             </div>
             <div class="col-auto">
               {{ form.category(class="form-control") }}
+              {% for error in form.category.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -63,6 +78,11 @@
             </div>
             <div class="col-auto">
               {{ form.ac_base(class="form-control") }}
+              {% for error in form.ac_base.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -79,6 +99,11 @@
             </div>
             <div class="col-auto">
               {{ form.modifier_strength.label }}
+              {% for error in form.modifier_strength.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -89,6 +114,11 @@
             </div>
             <div class="col-auto">
               {{ form.modifier_dexterity.label }}
+              {% for error in form.modifier_dexterity.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -103,6 +133,11 @@
             </div>
             <div class="col-auto">
               {{ form.modifier_constitution.label }}
+              {% for error in form.modifier_constitution.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -113,6 +148,11 @@
             </div>
             <div class="col-auto">
               {{ form.modifier_wisdom.label }}
+              {% for error in form.modifier_wisdom.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -126,6 +166,11 @@
             </div>
             <div class="col-auto">
               {{ form.modifier_intelligence.label }}
+              {% for error in form.modifier_intelligence.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -136,6 +181,11 @@
             </div>
             <div class="col-auto">
               {{ form.modifier_charisma.label }}
+              {% for error in form.modifier_charisma.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -151,6 +201,11 @@
             </div>
             <div class="col-auto">
               {{ form.max_modifier(class="form-control")}}
+              {% for error in form.max_modifier.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -161,6 +216,11 @@
             </div>
             <div class="col-auto">
               {{ form.strength_required(class="form-control")}}
+              {% for error in form.strength_required.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -174,6 +234,11 @@
             </div>
             <div class="col-auto">
               {{ form.cost_in_gp(class="form-control")}}
+              {% for error in form.cost_in_gp.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -184,6 +249,11 @@
             </div>
             <div class="col-auto">
               {{ form.weight(class="form-control")}}
+              {% for error in form.weight.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -197,26 +267,16 @@
             </div>
             <div class="col-auto">
               {{ form.stealth_disadvantage(class="form-control")}}
+              {% for error in form.stealth_disadvantage.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>
       </div>
 
-      <!-- {% for field in form %}
-        {% if field.widget.input_type != 'hidden' %}
-          <div class="row">
-            <div class="col-auto">
-              {{ field.label }}
-            </div>
-            <div class="col-auto">
-              {{ field }}
-            </div>
-          </div>
-          {% for error in field.errors %}
-            <span class="text-danger">{{ error }}</span>
-          {% endfor %}
-        {% endif %}
-      {% endfor %} -->
       <button class="btn btn-outline-dark" type="Submit">Create Armor!</button>
     </form>
 

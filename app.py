@@ -150,11 +150,27 @@ def get_armors():
 
   # armors += Armor.query.all()
   form = ArmorForm(my_creation=True)
-  return render_template('armor_list.html', armors=armors, form=form)
+  return render_template('armor_list.jinja', armors=armors, form=form)
 
 
 @app.route('/armor/new', methods=['POST'])
 def add_armor():
+
+  def rerender_failed_form():
+    flash("Failed to create Armor")
+    response = requests.get(BASE_URL + 'armor')
+    armors = response.json()['results']
+    
+    db_armors = Armor.query.all()
+    compat_armors = []
+    for armor in db_armors:
+      armor_dict = json.loads(armor.to_compat_json())
+      armor_dict['author'] = armor.author
+      compat_armors.append(armor_dict)
+
+    armors += compat_armors
+
+    return render_template('armor_list.jinja', armors=armors, form=form)
   
   form = ArmorForm()
 
@@ -162,10 +178,10 @@ def add_armor():
     valid = True
 
     if requests.get(BASE_URL + f'armor/{form.slug.data}'):
-      flash("URL is not unique")
+      form.slug.errors.append("URL is not unique")
       valid = False
     elif Armor.query.get(form.slug.data):
-      flash("URL is not unique")
+      form.slug.errors.append("URL is not unique")
       valid = False
 
     # check armor category before proceeding
@@ -203,16 +219,19 @@ def add_armor():
         return redirect(f'/armor/{form.slug.data}')
       except Exception as e:
         print(e)
-        flash("Something Went Wrong")
-        return redirect('/armor')
+        return rerender_failed_form()
+        # flash("Something Went Wrong")
+        # return redirect('/armor')
 
     else:
-      flash("Failed to create Armor")
-      return redirect('/armor')
+      return rerender_failed_form()
+      # flash("Failed to create Armor")
+      # return redirect('/armor')
 
   else:
-    flash("Failed to create Armor")
-    return redirect('/armor')
+    # form.validate_on_submit failed
+    return rerender_failed_form()
+    
 
 
 @app.route('/armor/<slug>', methods=['GET'])

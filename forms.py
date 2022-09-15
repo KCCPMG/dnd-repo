@@ -1,10 +1,11 @@
 import email
 from unicodedata import category
+from xml.dom import ValidationErr
 from click import password_option
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SelectField, IntegerRangeField, BooleanField, IntegerField, FloatField
-from wtforms.validators import DataRequired, Email, Length, URL, Optional, EqualTo
-
+from wtforms.validators import DataRequired, Email, Length, Optional, EqualTo, ValidationError
+import re
 
 
 ############ Custom Validators ############
@@ -15,6 +16,18 @@ def FloatOrNone(form, field):
     return
   else:
     return
+
+
+def SlugFormatRequired(form, field):
+
+  if len(re.findall("[a-zA-Z0-9\-_]", field.data)) != len(field.data):
+    raise ValidationError("Please use only letters, numbers, and the characters '-' and '_' in the slug")
+
+
+
+
+
+
 
 # def RequirementDependency(form, field, comp_field):
 #   if comp_field.data:
@@ -36,7 +49,6 @@ def RequirementDependency(comp_field):
 
 
 
-
 ############ Forms ############
 
 class LoginForm(FlaskForm):
@@ -54,6 +66,7 @@ class SignupForm(FlaskForm):
   password = PasswordField("Password", validators=[Length(min=6,  message="password must be at least 6 characters")])
   confirm_password = PasswordField("Confirm Password", validators=[EqualTo('password', "Passwords must match")])
 
+
 class CommentForm(FlaskForm):
   """Form for Comments (across types)"""
 
@@ -63,7 +76,7 @@ class CommentForm(FlaskForm):
 class ArmorForm(FlaskForm):
   """Form for creating a new Armor Item"""
 
-  slug = StringField("URL", validators=[DataRequired()])
+  slug = StringField("URL", validators=[DataRequired(message="URL is required"), SlugFormatRequired])
   name = StringField("Name")
   # my_creation = BooleanField("My Creation")
   category = SelectField("Armor Category", choices=['No Armor', 'Light Armor', 'Medium Armor', "Heavy Armor", 'Spell','Class Feature', 'Shield'])
