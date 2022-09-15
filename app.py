@@ -260,8 +260,30 @@ def add_armor_comment(slug):
     flash("Comment Saved!")
     return redirect(f"/armor/{slug}")
   else:
-    flash("Invalid")
-    return redirect(f"/armor/{slug}")
+    flash("Failed to add comment")
+    armor = None
+    author = None
+    comments = Armor.get_comments(slug)
+    comments.sort(reverse=True, key=get_comment_time)
+
+    response = requests.get(BASE_URL + f'armor/{slug}')
+    # no item returns 404, which is falsy
+    if response:
+      armor = response.json()
+    else:
+      found_armor = Armor.query.get(slug)
+      if not found_armor:
+        return render_template("404.jinja")
+      author = found_armor.author
+      armor = json.loads(found_armor.to_compat_json())
+
+    return render_template(
+      'armor_item.jinja', 
+      armor=armor, 
+      author=author, 
+      comments=comments, 
+      comment_form=form, 
+      form_action=f"/armor/{slug}/add-comment")
 
 
 ############ Weapons ############
@@ -500,8 +522,32 @@ def add_weapon_comment(slug):
     flash("Comment Saved!")
     return redirect(f"/weapons/{slug}")
   else:
-    flash("Invalid")
-    return redirect(f"/weapons/{slug}")
+    flash("Failed to add comment")
+    weapon = None
+    author = None
+    comments = Weapon.get_comments(slug)
+    comments.sort(reverse=True, key=get_comment_time)
+
+    response = requests.get(BASE_URL + f'weapons/{slug}')
+    # no item returns 404, which is falsy
+    if response:
+      weapon_json = response.json()
+      weapon = json.loads(Weapon.api_doc_to_compat_json(weapon_json))
+    else:
+      found_weapon = Weapon.query.get(slug)
+      if not found_weapon:
+        return render_template("404.jinja")
+      author = found_weapon.author
+      weapon = json.loads(found_weapon.to_compat_json())
+    
+    return render_template(
+      'weapon_item.jinja',
+      weapon=weapon,
+      author=author,
+      comments=comments, 
+      comment_form=form, 
+      form_action=f"/weapons/{slug}/add-comment"
+    )
 
 ############ Spells ############
 
@@ -618,6 +664,46 @@ def get_spell(slug):
     form_action=f"/spells/{slug}/add-comment"
   )
 
+@app.route('/spells/<slug>/add-comment', methods=['POST'])
+def add_spell_comment(slug):
+  """Add comment to a single spell item"""
+  form = CommentForm()
+
+  if form.validate_on_submit():
+    spell_comment = SpellComment.add_comment(slug, g.user.id, form.text.data)
+    db.session.add(spell_comment)
+    db.session.commit()
+    flash("Comment Saved!")
+    return redirect(f"/spells/{slug}")
+  else:
+    flash("Failed to add comment")
+    spell = None
+    author = None
+    comments = Spell.get_comments(slug)
+    comments.sort(reverse=True, key=get_comment_time)
+
+    response = requests.get(BASE_URL + f"spells/{slug}")
+
+    if response:
+      spell = response.json()
+    else:
+      found_spell = Spell.query.get(slug)
+      if not found_spell:
+        return render_template("404.jinja")
+      author = found_spell.author
+      spell = json.loads(found_spell.to_compat_json())
+
+    return render_template(
+      'spell_item.jinja',
+      spell=spell,
+      author=author,
+      comments=comments, 
+      comment_form=form, 
+      form_action=f"/spells/{slug}/add-comment"
+    )
+
+
+
 ############ Classes ############
 
 @app.route('/classes', methods=['GET'])
@@ -638,6 +724,9 @@ def get_classes():
   form = PlayerClassForm(my_creation=True)
   return render_template('class_list.jinja', player_classes=compat_classes, form=form)
 
+@app.route('/classes/new', methods=['POST'])
+def add_class():
+  pass
 
 @app.route('/classes/<slug>', methods=['GET'])
 def get_class(slug):
@@ -662,9 +751,6 @@ def get_class(slug):
     comments.sort(reverse=True, key=get_comment_time)
     comment_form = CommentForm()
 
-  # import pdb
-  # pdb.set_trace()
-
   return render_template(
     'class_item.jinja',
     pc=pc,
@@ -674,3 +760,45 @@ def get_class(slug):
     form_action=f"/classes/{slug}/add-comment",
     markdown=markdown
   )
+
+
+@app.route('/classes/<slug>/add-comment', methods=['POST'])
+def add_class_comment(slug):
+  """Add comment to a single player class"""
+
+  form = CommentForm()
+
+  if form.validate_on_submit():
+    class_comment = ClassComment.add_comment(slug, g.user.id, form.text.data)
+    db.session.add(class_comment)
+    db.session.commit()
+    flash("Comment Saved!")
+    return redirect(f"/classes/{slug}")
+  else:
+    flash("Failed to add comment")
+
+    pc = None
+    author = None
+    comments = PlayerClass.get_comments(slug)
+    comments.sort(reverse=True, key=get_comment_time)
+    
+    response = requests.get(BASE_URL + f'classes/{slug}')
+    # no item returns 404, which is falsy
+    if response:
+      pc = response.json()
+    else:
+      found_pc = PlayerClass.query.get(slug)
+      if not found_pc:
+        return render_template("404.jinja")
+      author = found_pc.author
+      pc = json.loads(found_pc.to_compat_json())
+
+    return render_template(
+      'class_item.jinja',
+      pc=pc,
+      author=author,
+      comments=comments,
+      comment_form=form,
+      form_action=f"/classes/{slug}/add-comment",
+      markdown=markdown
+    )

@@ -57,7 +57,7 @@ class SignupForm(FlaskForm):
 class CommentForm(FlaskForm):
   """Form for Comments (across types)"""
 
-  text = TextAreaField("Comment", validators=[DataRequired(), Length(max=1000)])
+  text = TextAreaField("Comment", validators=[DataRequired(message="Cannot create empty comment"), Length(max=1000)])
 
 
 class ArmorForm(FlaskForm):
