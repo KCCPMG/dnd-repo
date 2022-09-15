@@ -220,14 +220,8 @@ def add_armor():
       except Exception as e:
         print(e)
         return rerender_failed_form()
-        # flash("Something Went Wrong")
-        # return redirect('/armor')
-
     else:
       return rerender_failed_form()
-      # flash("Failed to create Armor")
-      # return redirect('/armor')
-
   else:
     # form.validate_on_submit failed
     return rerender_failed_form()
@@ -331,16 +325,34 @@ def get_weapons():
 @app.route('/weapons/new', methods=['POST'])
 def add_weapon():
 
+  def rerender_failed_form():
+    flash("Failed to create Weapon")
+    response = requests.get(BASE_URL + 'weapons')
+    weapon_results = response.json()['results']
+    weapons = [json.loads(Weapon.api_doc_to_compat_json(wr)) for wr in weapon_results]
+
+    db_weapons = Weapon.query.all()
+    compat_weapons = []
+
+    for weapon in db_weapons:
+      weapon_dict = json.loads(weapon.to_compat_json())
+      weapon_dict['author'] = weapon.author
+      compat_weapons.append(weapon_dict)
+
+    compat_weapons += weapons
+
+    return render_template('weapon_list.jinja', weapons=compat_weapons, form=form)
+
   form = WeaponForm()
 
   if form.validate_on_submit():
     valid = True
 
     if requests.get(BASE_URL + f'weapons/{form.slug.data}'):
-      flash("URL is not unique")
+      form.slug.errors.append("URL is not unique")
       valid = False
     elif Weapon.query.get(form.slug.data):
-      flash("URL is not unique")
+      form.slug.errors.append("URL is not unique")
       valid = False
 
 
@@ -479,20 +491,25 @@ def add_weapon():
 
       except Exception as e:
         print(e)
-        flash("failed validation")
-        for error in form.errors:
-          flash(error)
-        return redirect('/weapons')
+        # flash("Failed to create Weapon")
+        return rerender_failed_form()
+        # for error in form.errors:
+        #   flash(error)
+        # return redirect('/weapons')
     else:
-      flash("failed validation")
-      for error in form.errors:
-        flash(error)
-      return redirect('/weapons')
+      # flash("Failed to create Weapon")
+      return rerender_failed_form()
+      # flash("failed validation")
+      # for error in form.errors:
+      #   flash(error)
+      # return redirect('/weapons')
   else:
-    flash("failed validation")
-    for error in form.errors:
-      flash(error)
-    return redirect('/weapons')
+    # flash("Failed to create Weapon")
+    return rerender_failed_form()
+    # flash("failed validation")
+    # for error in form.errors:
+    #   flash(error)
+    # return redirect('/weapons')
 
 
 

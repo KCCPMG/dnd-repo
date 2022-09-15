@@ -77,12 +77,9 @@ class ArmorForm(FlaskForm):
   """Form for creating a new Armor Item"""
 
   slug = StringField("URL", validators=[DataRequired(message="URL is required"), SlugFormatRequired])
-  name = StringField("Name")
-  # my_creation = BooleanField("My Creation")
+  name = StringField("Name", validators=[DataRequired(message="Name is required")])
   category = SelectField("Armor Category", choices=['No Armor', 'Light Armor', 'Medium Armor', "Heavy Armor", 'Spell','Class Feature', 'Shield'])
   ac_base = IntegerField("AC Base", validators=[Optional()])
-
-  # modifier_attributes = SelectMultipleField("Ability Modifiers", choices=['Strength', 'Dexterity', 'Constitution', 'Wisdom', 'Intelligence', 'Charisma'])
 
   modifier_strength = BooleanField('Strength') 
   modifier_dexterity = BooleanField('Dexterity')
@@ -102,15 +99,12 @@ class ArmorForm(FlaskForm):
 
 class WeaponForm(FlaskForm): 
   
-  slug = StringField("URL", validators=[DataRequired(message="Slug is required")])
-  name = StringField("Name", validators=[DataRequired()])
+  slug = StringField("URL", validators=[DataRequired(message="URL is required"), SlugFormatRequired])
+  name = StringField("Name", validators=[DataRequired(message="Name is required")])
   bonus = IntegerField("Bonus", validators=[Optional()])
   weapon_category = SelectField("Weapon Category", choices=['Simple Melee Weapons', 'Simple Ranged Weapons', 'Martial Melee Weapons', 'Martial Ranged Weapons'])
   cost_in_gp = FloatField("Cost (In Gold Points)", validators=[Optional()])
   weight = FloatField("Weight (In lbs.)", validators=[Optional()])
-  
-  # weapon_properties
-
 
   wp_finesse = BooleanField("finesse")
   wp_heavy = BooleanField("heavy")

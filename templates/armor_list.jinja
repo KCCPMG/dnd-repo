@@ -21,10 +21,10 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.slug.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">/armor/</span>
@@ -41,10 +41,10 @@
         </div>
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.name.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.name(class="form-control") }}
               {% for error in form.name.errors %}
                 <span class="text-danger">
@@ -58,10 +58,10 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.category.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.category(class="form-control") }}
               {% for error in form.category.errors %}
                 <span class="text-danger">
@@ -73,10 +73,10 @@
         </div>
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.ac_base.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.ac_base(class="form-control") }}
               {% for error in form.ac_base.errors %}
                 <span class="text-danger">
@@ -94,11 +94,11 @@
       <div class="row">
         <div class="col">
           <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {{ form.modifier_strength(class="form-control")}}
-            </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.modifier_strength.label }}
+            </div>
+            <div class="col">
+              {{ form.modifier_strength(class="form-control")}}
               {% for error in form.modifier_strength.errors %}
                 <span class="text-danger">
                   {{error}}
@@ -109,11 +109,11 @@
         </div>
         <div class="col">
           <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {{ form.modifier_dexterity(class="form-control")}}
-            </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.modifier_dexterity.label }}
+            </div>
+            <div class="col">
+              {{ form.modifier_dexterity(class="form-control")}}
               {% for error in form.modifier_dexterity.errors %}
                 <span class="text-danger">
                   {{error}}
@@ -128,11 +128,11 @@
       <div class="row">
         <div class="col">
           <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {{ form.modifier_constitution(class="form-control")}}
-            </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.modifier_constitution.label }}
+            </div>
+            <div class="col">
+              {{ form.modifier_constitution(class="form-control")}}
               {% for error in form.modifier_constitution.errors %}
                 <span class="text-danger">
                   {{error}}
@@ -143,11 +143,11 @@
         </div>
         <div class="col">
           <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {{ form.modifier_wisdom(class="form-control")}}
-            </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.modifier_wisdom.label }}
+            </div>
+            <div class="col">
+              {{ form.modifier_wisdom(class="form-control")}}
               {% for error in form.modifier_wisdom.errors %}
                 <span class="text-danger">
                   {{error}}
@@ -161,11 +161,11 @@
       <div class="row">
         <div class="col">
           <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {{ form.modifier_intelligence(class="form-control")}}
-            </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.modifier_intelligence.label }}
+            </div>
+            <div class="col">
+              {{ form.modifier_intelligence(class="form-control")}}
               {% for error in form.modifier_intelligence.errors %}
                 <span class="text-danger">
                   {{error}}
@@ -176,11 +176,11 @@
         </div>
         <div class="col">
           <div class="row d-flex justify-content-start">
-            <div class="col-auto">
-              {{ form.modifier_charisma(class="form-control")}}
-            </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.modifier_charisma.label }}
+            </div>
+            <div class="col">
+              {{ form.modifier_charisma(class="form-control")}}
               {% for error in form.modifier_charisma.errors %}
                 <span class="text-danger">
                   {{error}}
@@ -196,10 +196,10 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.max_modifier.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.max_modifier(class="form-control")}}
               {% for error in form.max_modifier.errors %}
                 <span class="text-danger">
@@ -211,10 +211,10 @@
         </div>
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.strength_required.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.strength_required(class="form-control")}}
               {% for error in form.strength_required.errors %}
                 <span class="text-danger">
@@ -229,10 +229,10 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.cost_in_gp.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.cost_in_gp(class="form-control")}}
               {% for error in form.cost_in_gp.errors %}
                 <span class="text-danger">
@@ -244,10 +244,10 @@
         </div>
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.weight.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.weight(class="form-control")}}
               {% for error in form.weight.errors %}
                 <span class="text-danger">
@@ -262,10 +262,10 @@
       <div class="row">
         <div class="col">
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               {{ form.stealth_disadvantage.label }}
             </div>
-            <div class="col-auto">
+            <div class="col">
               {{ form.stealth_disadvantage(class="form-control")}}
               {% for error in form.stealth_disadvantage.errors %}
                 <span class="text-danger">
@@ -275,9 +275,15 @@
             </div>
           </div>
         </div>
+        <div class="col">
+        </div>
       </div>
 
-      <button class="btn btn-outline-dark" type="Submit">Create Armor!</button>
+      <div class="row justify-content-center">
+        <button class="btn btn-outline-dark" type="Submit">
+          Create Armor!
+        </button>
+      </div>
     </form>
 
 
