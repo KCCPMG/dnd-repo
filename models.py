@@ -904,7 +904,7 @@ class WeaponDamageRoll(db.Model):
     try:
       DamageType.query.get(damage_type)
     except:
-      print(f"DamageType {damage_type} not found")
+      # print(f"DamageType {damage_type} (type {type(damage_type)}) not found")
       raise exc.IntegrityError(f"DamageType {damage_type} not found")
 
     try:
@@ -2085,19 +2085,8 @@ class PlayerClass(db.Model):
         ArmorProficiency.create_armor_proficiency(armor_proficiency, player_class.slug)
       except Exception as e:
         db.session.rollback()
-        raise(e)
         raise ValueError(f"Armor Proficiency {armor_proficiency} is invalid")
 
-    # create weapon_proficiences
-    # for weapon_proficiency in weapon_proficiencies:
-    #   try:
-    #     WeaponProficiency.create_weapon_proficiency(weapon_proficiency, player_class.slug)
-    #   except:
-    #     raise ValueError(f"Weapon Proficiency {weapon_proficiency} is invalid")
-
-    import pdb
-    pdb.set_trace()
-    
     # create saving_throws
     for saving_throw_id in saving_throw_ids:
       try:

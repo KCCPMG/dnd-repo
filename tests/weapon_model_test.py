@@ -1,7 +1,10 @@
 import os
+from sqlite3 import IntegrityError
 from unittest import TestCase
 from sqlalchemy import exc
 import requests
+import json
+from psycopg2 import errors
 
 from models import Weapon, User
 
@@ -198,7 +201,7 @@ class WeaponTest(TestCase):
       )
 
     # omitting name
-    with self.assertRaises(ValueError):
+    with self.assertRaises(TypeError):
       new_weapon = Weapon.create_weapon(
         slug='daedric-claymore', 
         # name='Daedric Claymore', 
@@ -305,7 +308,8 @@ class WeaponTest(TestCase):
     )
 
     my_greatsword_json = my_greatsword.to_compat_json()
-    print(my_greatsword_json)    
+    # print(my_greatsword_json)    
+
 
     f = open('tests/api_greatsword.json', 'w')
     f.write(api_greatsword_json)
@@ -314,4 +318,10 @@ class WeaponTest(TestCase):
     f.write(my_greatsword_json)
     f.close()
 
-    self.assertEqual(api_greatsword_json, my_greatsword_json)
+    # check only keys in original json to avoid conflict on "bonus"
+    my_greatsword_dict = json.loads(my_greatsword_json)
+    api_greatsword_dict = json.loads(api_greatsword_json)
+    for key in api_greatsword_dict.keys():
+      self.assertEqual(api_greatsword_dict[key], my_greatsword_dict[key])
+    
+    # self.assertEqual(api_greatsword_json, my_greatsword_json)
