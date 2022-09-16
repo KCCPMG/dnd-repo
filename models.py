@@ -2074,6 +2074,7 @@ class PlayerClass(db.Model):
 
     db.session.add(player_class)
 
+
     # if not isinstance(player_class, PlayerClass):
     #   db.session.rollback()
     #   raise ValueError("Failed to create PlayerClass")
@@ -2082,8 +2083,9 @@ class PlayerClass(db.Model):
     for armor_proficiency in armor_proficiencies:
       try:
         ArmorProficiency.create_armor_proficiency(armor_proficiency, player_class.slug)
-      except:
+      except Exception as e:
         db.session.rollback()
+        raise(e)
         raise ValueError(f"Armor Proficiency {armor_proficiency} is invalid")
 
     # create weapon_proficiences
@@ -2093,6 +2095,9 @@ class PlayerClass(db.Model):
     #   except:
     #     raise ValueError(f"Weapon Proficiency {weapon_proficiency} is invalid")
 
+    import pdb
+    pdb.set_trace()
+    
     # create saving_throws
     for saving_throw_id in saving_throw_ids:
       try:

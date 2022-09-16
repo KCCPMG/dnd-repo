@@ -30,12 +30,12 @@
                   <span class="input-group-text">/armor/</span>
                 </div>
                 {{ form.slug(class="form-control") }}
-                {% for error in form.slug.errors %}
-                  <span class="text-danger">
-                    {{error}}
-                  </span>
-                {% endfor %}
               </div>
+              {% for error in form.slug.errors %}
+                <span class="text-danger">
+                  {{error}}
+                </span>
+              {% endfor %}
             </div>
           </div>
         </div>

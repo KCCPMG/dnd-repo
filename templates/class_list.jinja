@@ -30,10 +30,10 @@
                   <span class="input-group-text">/classes/</span>
                 </div>
                 {{ form.slug(class="form-control") }}
-                {% for error in form.slug.errors %}
-                  <span class="text-danger">{{ error }}</span>
-                {% endfor %}
               </div>
+              {% for error in form.slug.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -44,6 +44,9 @@
             </div>
             <div class="col">
               {{ form.name(class="form-control") }}
+              {% for error in form.name.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -57,6 +60,9 @@
             </div>
             <div class="col">
               {{ form.hit_die(class="form-control") }}
+              {% for error in form.hit_die.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -67,6 +73,9 @@
             </div>
             <div class="col">
               {{ form.base_hp_at_1st_level(class="form-control") }}
+              {% for error in form.base_hp_at_1st_level.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -80,6 +89,9 @@
             </div>
             <div class="col">
               {{ form.starting_equipment(class="form-control") }}
+              {% for error in form.starting_equipment.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -90,6 +102,9 @@
             </div>
             <div class="col">
               {{ form.spellcasting_ability(class="form-control") }}
+              {% for error in form.spellcasting_ability.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -103,6 +118,9 @@
             </div>
             <div class="col">
               {{ form.subtypes_name(class="form-control") }}
+              {% for error in form.subtypes_name.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -120,6 +138,9 @@
             </div>
             <div class="col">
               {{ form.tool_proficiency(class="form-control") }}
+              {% for error in form.tool_proficiency.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -130,6 +151,9 @@
             </div>
             <div class="col">
               {{ form.skill_proficiency(class="form-control") }}
+              {% for error in form.skill_proficiency.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -143,6 +167,9 @@
             </div>
             <div class="col">
               {{ form.prof_weapons(class="form-control") }}
+              {% for error in form.prof_weapons.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -160,6 +187,9 @@
             </div>
             <div class="col">
               {{ form.armor_proficiency_none(class="form-control") }}
+              {% for error in form.armor_proficiency_none.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -170,6 +200,9 @@
             </div>
             <div class="col">
               {{ form.armor_proficiency_light(class="form-control") }}
+              {% for error in form.armor_proficiency_light.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -183,6 +216,9 @@
             </div>
             <div class="col">
               {{ form.armor_proficiency_medium(class="form-control") }}
+              {% for error in form.armor_proficiency_medium.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -193,6 +229,9 @@
             </div>
             <div class="col">
               {{ form.armor_proficiency_heavy(class="form-control") }}
+              {% for error in form.armor_proficiency_heavy.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -206,6 +245,9 @@
             </div>
             <div class="col">
               {{ form.armor_proficiency_spell(class="form-control") }}
+              {% for error in form.armor_proficiency_spell.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -216,6 +258,9 @@
             </div>
             <div class="col">
               {{ form.armor_proficiency_class_feature(class="form-control") }}
+              {% for error in form.armor_proficiency_class_feature.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -229,6 +274,9 @@
             </div>
             <div class="col">
               {{ form.armor_proficiency_shield(class="form-control") }}
+              {% for error in form.armor_proficiency_shield.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -246,6 +294,9 @@
             </div>
             <div class="col">
               {{ form.saving_throw_str(class="form-control") }}
+              {% for error in form.saving_throw_str.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -256,6 +307,9 @@
             </div>
             <div class="col">
               {{ form.saving_throw_dex(class="form-control") }}
+              {% for error in form.saving_throw_dex.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -269,6 +323,9 @@
             </div>
             <div class="col">
               {{ form.saving_throw_con(class="form-control") }}
+              {% for error in form.saving_throw_con.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -279,6 +336,9 @@
             </div>
             <div class="col">
               {{ form.saving_throw_wis(class="form-control") }}
+              {% for error in form.saving_throw_wis.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -292,6 +352,9 @@
             </div>
             <div class="col">
               {{ form.saving_throw_int(class="form-control") }}
+              {% for error in form.saving_throw_int.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -302,6 +365,9 @@
             </div>
             <div class="col">
               {{ form.saving_throw_cha(class="form-control") }}
+              {% for error in form.saving_throw_cha.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -309,9 +375,15 @@
 
       {{form.description.label}}
       {{form.description(class="form-control")}}
+      {% for error in form.description.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
       
       {{form.table.label}}
       {{form.table(class="form-control")}}
+      {% for error in form.table.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
       
       <div class="row m-2 justify-content-center">
         <button class="btn btn-outline-dark" type="Submit">
