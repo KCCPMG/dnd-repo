@@ -55,7 +55,7 @@ def get_index():
     return redirect('/home')
 
   form = LoginForm()
-  return render_template('index.html', form=form)
+  return render_template('index.jinja', form=form)
 
 
 @app.route('/login', methods=['POST'])
@@ -88,7 +88,7 @@ def logout():
 @app.route('/home')
 def get_home():
 
-  return render_template('home.html')
+  return render_template('home.jinja')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -122,12 +122,12 @@ def handle_signup():
         return redirect('/home')
       except:
         flash("Something went wrong")
-        return render_template("signup_form.html", form=form)
+        return render_template("signup_form.jinja", form=form)
     else:
-      return render_template("signup_form.html", form=form)
+      return render_template("signup_form.jinja", form=form)
 
   else:
-    return render_template("signup_form.html", form=form)
+    return render_template("signup_form.jinja", form=form)
 
 ############ Armor ############
 
