@@ -153,18 +153,18 @@ class WeaponForm(FlaskForm):
 
 
 class SpellForm(FlaskForm): 
-  slug = StringField("URL", validators=[DataRequired()])
-  name = StringField("Name", validators=[DataRequired()])
-  description = TextAreaField("Description")
-  higher_level = TextAreaField("At Higher Levels")
+  slug = StringField("URL", validators=[DataRequired(message="URL is required"), SlugFormatRequired])
+  name = StringField("Name", validators=[DataRequired(message="Name is required")])
+  description = TextAreaField("Description", validators=[DataRequired(message="Description is required")])
+  higher_level = TextAreaField("At Higher Levels", validators=[DataRequired(message="At higher levels is required (can simply be '(N/A)'")])
   page = IntegerField("Page", validators=[Optional()])
-  spell_range = StringField("Range")
+  spell_range = StringField("Range", validators=[DataRequired(message="Spell Range is required")])
   material = StringField("Material")
   ritual = BooleanField("Ritual")
-  duration = StringField("Duration")
+  duration = StringField("Duration", validators=[DataRequired(message="Duration is required")])
   concentration = BooleanField("Concentration")
-  casting_time = StringField("Casting Time")
-  level = IntegerField("Level")
+  casting_time = StringField("Casting Time", validators=[DataRequired(message="Casting Time is required")])
+  level = IntegerField("Level", validators=[DataRequired(message="Level is required (0 for Cantrip)")])
   magic_school = SelectField("Magic School", choices=["illusion", "transmutation", "conjuration", "necromancy", "evocation", "abjuration", "enchantment", "divination"])
   circles = StringField("Circles")
   spell_component_v = BooleanField("Verbal (V)")
@@ -174,7 +174,7 @@ class SpellForm(FlaskForm):
 
 
 class PlayerClassForm(FlaskForm):
-  slug = StringField("URL", validators=[DataRequired()])
+  slug = StringField("URL", validators=[DataRequired(message="URL is required"), SlugFormatRequired])
   name = StringField("Name")
   description = TextAreaField("Description (Markdown Compatible)", validators=[DataRequired()])
   hit_die = SelectField("Hit Die (d:)", choices = [2, 4, 6, 8, 10, 12, 20, 100]) 

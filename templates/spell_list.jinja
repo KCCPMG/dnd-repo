@@ -31,10 +31,10 @@
                   <span class="input-group-text">/spells/</span>
                 </div>
                 {{ form.slug(class="form-control") }}
-                {% for error in form.slug.errors %}
-                  <span class="text-danger">{{ error }}</span>
-                {% endfor %}
               </div>
+              {% for error in form.slug.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -45,6 +45,9 @@
             </div>
             <div class="col">
               {{ form.name(class="form-control") }}
+              {% for error in form.name.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -58,6 +61,9 @@
             </div>
             <div class="col">
               {{ form.level(class="form-control") }}
+              {% for error in form.level.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -68,6 +74,9 @@
             </div>
             <div class="col">
               {{ form.spell_range(class="form-control") }}
+              {% for error in form.spell_range.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -81,6 +90,9 @@
             </div>
             <div class="col">
               {{ form.ritual(class="form-control") }}
+              {% for error in form.ritual.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -91,6 +103,9 @@
             </div>
             <div class="col">
               {{ form.concentration(class="form-control") }}
+              {% for error in form.concentration.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -104,6 +119,9 @@
             </div>
             <div class="col">
               {{ form.duration(class="form-control") }}
+              {% for error in form.duration.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -114,6 +132,9 @@
             </div>
             <div class="col">
               {{ form.casting_time(class="form-control") }}
+              {% for error in form.casting_time.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -127,6 +148,9 @@
             </div>
             <div class="col">
               {{ form.page(class="form-control") }}
+              {% for error in form.page.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -137,6 +161,9 @@
             </div>
             <div class="col">
               {{ form.material(class="form-control") }}
+              {% for error in form.material.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -150,6 +177,9 @@
             </div>
             <div class="col">
               {{ form.spell_component_v(class="form-control") }}
+              {% for error in form.spell_component_v.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -160,6 +190,9 @@
             </div>
             <div class="col">
               {{ form.spell_component_s(class="form-control") }}
+              {% for error in form.spell_component_s.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -173,6 +206,9 @@
             </div>
             <div class="col">
               {{ form.spell_component_m(class="form-control") }}
+              {% for error in form.spell_component_m.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -188,6 +224,9 @@
             </div>
             <div class="col">
               {{ form.magic_school(class="form-control") }}
+              {% for error in form.magic_school.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -198,6 +237,9 @@
             </div>
             <div class="col">
               {{ form.circles(class="form-control") }}
+              {% for error in form.circles.errors %}
+                <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -205,9 +247,15 @@
 
       {{form.description.label}}
       {{form.description(class="form-control")}}
+      {% for error in form.description.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
 
       {{form.higher_level.label}}
       {{form.higher_level(class="form-control")}}
+      {% for error in form.higher_level.errors %}
+        <span class="text-danger">{{ error }}</span>
+      {% endfor %}
 
 
       <div class="row m-2 justify-content-center">

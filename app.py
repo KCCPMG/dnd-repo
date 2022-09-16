@@ -608,10 +608,24 @@ def get_spells():
 @app.route('/spells/new', methods=['POST'])
 def add_spell():
   
-  form = SpellForm()
+  def rerender_failed_form():
+    flash("Failed to create Spell")
+    response = requests.get(BASE_URL + 'spells')
+    spells = response.json()['results']
 
-  import pdb
-  pdb.set_trace()
+    db_spells = Spell.query.all()
+    compat_spells = []
+    for spell in db_spells:
+      spell_dict = json.loads(spell.to_compat_json())
+      spell_dict['author'] = spell.author
+      compat_spells.append(spell_dict)
+
+    spells += compat_spells
+
+    return render_template('spell_list.jinja', spells = spells, form = form)
+
+
+  form = SpellForm()
 
   if form.validate_on_submit():
 
@@ -660,12 +674,10 @@ def add_spell():
       return redirect("/spells")
     except Exception as e:
       print(e)
-      flash("Something went wrong")
-      return redirect("/spells")
+      return rerender_failed_form()
   else:
     print(form.errors)
-    flash("Something went wrong")
-    return redirect("/spells")
+    return rerender_failed_form()
 
 
 @app.route('/spells/<slug>', methods=['GET'])
