@@ -16,11 +16,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgre
 app.config['SECRET_KEY'] = 'temp_key'
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SQLALCHEMY_ECHO']
-# app.jinja_env.lstrip_blocks = False
-# app.jinja_env.trim_blocks = False
-
-
 
 toolbar = DebugToolbarExtension(app)
 
@@ -45,6 +40,15 @@ def get_user():
     g.user = User.query.get(session[CURR_USER_KEY])
   else:
     g.user = None
+
+
+############ 404 ############
+
+@app.errorhandler(404)
+def get_404(e):
+  return render_template('404.jinja')
+
+
 
 ############ Index ############
 
@@ -75,6 +79,15 @@ def get_user():
     flash("Error. Please try again.")
   
   return redirect("/")
+
+
+@app.route('/login-guest', methods=['GET'])
+def get_guest():
+  user = User.query.filter(User.username == "guest").one()
+  session[CURR_USER_KEY] = user.id
+  flash(f"Hello, {user.username}!", "success")
+  return redirect("/")
+
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -770,7 +783,7 @@ def get_classes():
   compat_classes += player_classes
 
   form = PlayerClassForm(my_creation=True)
-  return render_template('class_list.jinja', player_classes=compat_classes, form=form)
+  return render_template('class_list.jinja', player_classes=compat_classes, form=form, markdown=markdown)
 
 
 @app.route('/classes/new', methods=['POST'])

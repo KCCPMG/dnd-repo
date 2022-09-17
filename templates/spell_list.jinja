@@ -7,7 +7,11 @@
   <div class="container">
     <div class="row m-2 justify-content-md-center">
       <div class="col-auto">
-        <button class="btn btn-outline-dark toggle-spell-form-button m-4">Add Spell</button>
+        {% if g.user %}
+          <button class="btn btn-outline-dark toggle-spell-form-button m-4">
+            Add Spell
+          </button>
+        {% endif %}
       </div>
     </div>
 
@@ -274,7 +278,7 @@
           </div>
           <div class="col-auto">
             <a href="/spells/{{spell.slug}}">Page</a>
-            <button class="toggle-expanded-view-button">Expand</button>
+            <button class="toggle-expanded-view-button btn btn-outline-dark m-1">Expand</button>
           </div>
         </div>
         <div class="row">

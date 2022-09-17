@@ -1,5 +1,7 @@
 <div class="comment">
-  <p>{{ comment.author.username }}</p>
-  <p>{{ comment.posted_at}}</p>
   <p>{{ comment.text }}</p>
+  <hr/>
+  <p>
+    {{ comment.author.username }} - {{ comment.posted_at.strftime("%I:%M %p, %B %w, %Y")}} 
+  </p>
 </div>

@@ -7,9 +7,11 @@
   <div class="container">
     <div class="row m-2 justify-content-md-center">
       <div class="col-auto">
-        <button class="btn btn-outline-dark toggle-player-class-form-button m-4">
-          Add Class
-        </button>
+        {% if g.user %}
+          <button class="btn btn-outline-dark toggle-player-class-form-button m-4">
+            Add Class
+          </button>
+        {% endif %}
       </div>
     </div>
 
@@ -392,8 +394,6 @@
       </div>
     </form>
 
-
-
     <h1>Classes - All</h1>
     {% for pc in player_classes %}
       <div class="container list-item">
@@ -403,7 +403,7 @@
           </div>
           <div class="col-auto">
             <a href="/classes/{{pc.slug}}">Page</a>
-            <button class="toggle-expanded-view-button">Expand</button>
+            <button class="toggle-expanded-view-button btn btn-outline-dark m-1">Expand</button>
           </div>
         </div>
         <div class="row">
@@ -418,28 +418,66 @@
 
         <div class="expanded-detail" hidden>
           <div class="row justify-content-between">
-            <div class="col-auto">
-              {# Category: {{armor.category}} #}
+            <div class="col">
+              Starting HP: {{pc.hp_at_1st_level}}
             </div>
-            <div class="col-auto">
-              {# AC: {{armor.ac_string}} #}
+            <div class="col">
+              Hit Die: {{pc.hit_dice}}
+            </div>
+          </div>
+          <hr/>
+          <h5>Proficiencies</h5>
+          <div class="row justify-content-between">
+            <div class="col">
+              Armor: {{pc.prof_armor}}
+            </div>
+            <div class="col">
+              Weapons: {{pc.prof_weapons}}
             </div>
           </div>
           <div class="row justify-content-between">
-            <div class="col-auto">
-              {# Strength Required: {{armor.strength_requirement}} #}
+            <div class="col">
+              Skills: {{pc.prof_skills | default("N/A")}}
             </div>
-            <div class="col-auto">
-              {# Cost: {{armor['cost']}} #}
+            <div class="col">
+              Tools: {{pc.prof_tools | default("N/A")}}
             </div>
           </div>
+
           <div class="row justify-content-between">
-            <div class="col-auto">
-              {# Weight: {{armor.weight}} #}
-            </div>        
-            <div class="col-auto">
-              {# Stealth Disadvantage: {{armor.stealth_disadvantage}} #}
-            </div>          
+            <div class="col">
+              Starting Equipment: {{pc.equipment}}
+            </div>
+            <div class="col">
+              Subtypes Name: {{pc.subtypes_name}}                    
+            </div>
+          </div>
+
+          <div class="row justify-content-between">
+            <div class="col">
+              Saving Throws: {{pc.prof_saving_throws}}
+            </div>
+            <div class="col">
+              Spellcasting Ability: {{pc.spellcasting_ability | default("N/A")}}
+            </div>
+          </div>
+
+          <hr/>
+          <h5>Description</h5>
+          <div class="row justify-content-between">
+            <div class="col">
+              {{ markdown.markdown(pc.desc)}}
+            </div>
+          </div>
+          <hr/>
+          <h5>Table</h5>
+          <div class="row justify-content-between">
+            <div class="col">
+              {%+ for line in pc.table.split("\n") +%}
+                {{ line | replace(" ", "&nbsp;")}}
+                <br/>
+              {% endfor %}
+            </div>
           </div>
         </div>
 

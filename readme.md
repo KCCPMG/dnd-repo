@@ -18,3 +18,10 @@ The goal of these models is to give the ability to create database documents tha
 1. The complexity of adding a nested document into another document would likely be fairly easy as far as the SQL layout, but much more challenging in terms of implementing the form and handling.
 2. The API itself seems to actually have incomplete information on archetypes, listing only one archetype per class though there should be many.
 This is a feature that could be built out more in a future revision, but would likely need to be its own document with a separate page view and creation process, which would also allow users to create their own archetypes on player classes that other users have created, as well as on official documents. (This also means that 'archetypes' as far as spells are concerned will just be text that do not exist anywhere besides the 'archetype_spell_assignments' table)
+
+
+## Future Features
+
+- Allow users to click on a page from home to see their own creations and comments
+- See other users' items and comments
+- Refactor views to cut down on repetition

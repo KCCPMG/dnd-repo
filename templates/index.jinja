@@ -1,6 +1,6 @@
 {% extends 'base.jinja' %}
 {% block content %}
-  <div class="container-sm text-center p-3">
+  <div class="container-sm text-center m-5 p-3">
     <h1>Dragon's Hoard</h1>
     <h5>A Repository for Official and Homebrew DnD 5e Content</h5>
     <div class="container-sm text-center p-4">
@@ -10,11 +10,11 @@
         {% for field in form %}
           
           {% if field.widget.input_type != 'hidden' %}
-            <div class="row justify-content-around">
-              <div class="col-auto">
+            <div class="row justify-content-middle">
+              <div class="col">
                 {{ field.label }}
               </div>
-              <div class="col-auto">
+              <div class="col">
                 <div class="row">
                   {{ field }}
                 </div>
@@ -36,9 +36,18 @@
     </div>
 
     <div class="container p-4">
-      <a href="/signup">
-        <button class="btn btn-lg btn-outline-dark">Sign Up</button>
-      </a>
+      <div class="row justify-content-md-center">
+        <a href="/login-guest">
+          <button class="btn m-3 btn-lg btn-outline-dark">
+            Log in as Guest
+          </button>
+        </a>
+        <a href="/signup">
+          <button class="btn m-3 btn-lg btn-outline-dark">
+            Sign Up
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 {% endblock %}
