@@ -7,13 +7,14 @@ import markdown
 
 from models import db, connect_db, User, Armor, ArmorComment, WeaponComment, SpellComment, ClassComment, ArmorCategory, Weapon, Spell, PlayerClass, WeaponProperty, WeaponCategory, DamageType, MagicSchool, Attribute
 from forms import CommentForm, LoginForm, ArmorForm, SignupForm, WeaponForm, SpellForm, PlayerClassForm
+from env import secret
 
 BASE_URL = 'https://api.open5e.com/'
 
 app = Flask(__name__, root_path=os.path.dirname(os.path.realpath(__file__)))
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///dnd-repo'))
-app.config['SECRET_KEY'] = 'temp_key'
+app.config['SECRET_KEY'] = secret
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

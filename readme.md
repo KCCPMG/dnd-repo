@@ -25,3 +25,4 @@ This is a feature that could be built out more in a future revision, but would l
 - Allow users to click on a page from home to see their own creations and comments
 - See other users' items and comments
 - Refactor views to cut down on repetition
+- Add icons and artwork

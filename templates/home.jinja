@@ -1,7 +1,25 @@
 {% extends 'base.jinja' %}
 {% block content %}
-  <a href="/armor"><button>Armor</button></a>
-  <a href="/weapons"><button>Weapons</button></a>
-  <a href="/spells"><button>Spells</button></a>
-  <a href="/classes"><button>Classes</button></a>
+  <div class="container m-5">
+    <a href="/armor">
+      <button class="btn btn-outline-dark m-5">
+        <h1>Armor</h1>
+      </button>
+    </a>
+    <a href="/weapons">
+      <button class="btn btn-outline-dark m-5">
+        <h1>Weapons</h1>
+      </button>
+    </a>
+    <a href="/spells">
+      <button class="btn btn-outline-dark m-5">
+        <h1>Spells</h1>
+      </button>
+    </a>
+    <a href="/classes">
+      <button class="btn btn-outline-dark m-5">
+        <h1>Classes</h1>
+      </button>
+    </a>
+  </div>
 {% endblock %}
