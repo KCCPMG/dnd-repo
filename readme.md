@@ -26,3 +26,5 @@ This is a feature that could be built out more in a future revision, but would l
 - See other users' items and comments
 - Refactor views to cut down on repetition
 - Add icons and artwork
+- Split documents across multiple pages (ie 10 per page)
+- Add search functionality
