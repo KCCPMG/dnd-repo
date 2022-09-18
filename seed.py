@@ -933,8 +933,9 @@ db.session.add_all([
 
 ])
 
-# samples
-user = User.create_user('jack@be.nimble','jackieboy', 'test123')
+# guest
+guest = User.create_user('guest@guest.com', 'guest', 'test123')
+
 
 db.session.commit()
 
