@@ -2,6 +2,7 @@ from flask import Flask, redirect, jsonify, render_template, flash, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 import requests
 import os
+import re
 import json
 import markdown
 
@@ -13,7 +14,14 @@ BASE_URL = 'https://api.open5e.com/'
 
 app = Flask(__name__, root_path=os.path.dirname(os.path.realpath(__file__)))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///dnd-repo'))
+
+# resolve postgres / postgresql error with heroku
+uri = (os.environ.get('DATABASE_URL', 'postgresql:///dnd-repo'))
+if uri.startswith("postgres://"):
+  uri = uri.replace("postgres://", "postgresql://", 1)
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SECRET_KEY'] = secret
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
