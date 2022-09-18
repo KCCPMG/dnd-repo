@@ -1,7 +1,7 @@
 from app import db
 from models import *
 
-db.session.rollback()
+# db.session.rollback()
 db.drop_all()
 db.create_all()
 
