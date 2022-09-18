@@ -939,13 +939,13 @@ guest = User.create_user('guest@guest.com', 'guest', 'test123')
 
 db.session.commit()
 
-armor_comment = ArmorComment.add_comment('armor', user.id, "this is my armor comment content")
+armor_comment = ArmorComment.add_comment('armor', guest.id, "this is my armor comment content")
 
-weapon_comment = WeaponComment.add_comment('weapon', user.id, "this is my weapon comment content")
+weapon_comment = WeaponComment.add_comment('weapon', guest.id, "this is my weapon comment content")
 
-spell_comment = SpellComment.add_comment('spell', user.id, "this is my spell comment content")
+spell_comment = SpellComment.add_comment('spell', guest.id, "this is my spell comment content")
 
-class_comment = ClassComment.add_comment('class', user.id, "this is my class comment content")
+class_comment = ClassComment.add_comment('class', guest.id, "this is my class comment content")
 
 new_armor = Armor.create_armor(slug="slug", 
                                 name="Slug", 
@@ -960,7 +960,7 @@ new_armor = Armor.create_armor(slug="slug",
                                 cost_in_gp=0, 
                                 # weight=10, 
                                 stealth_disadvantage=False, 
-                                author_user_id=user.id)
+                                author_user_id=guest.id)
 
 comfy_sweater = Armor.create_armor(
   slug="comfy-sweater", 
@@ -979,7 +979,7 @@ comfy_sweater = Armor.create_armor(
   author_user_id=user.id
 )
 
-new_armor_comment = ArmorComment.add_comment('slug', user.id, "this is my new  armor joining comment content")
+new_armor_comment = ArmorComment.add_comment('slug', guest.id, "this is my new  armor joining comment content")
 
 hacksaw = Weapon.create_weapon(slug='hacksaw', name='Hacksaw', weapon_category=3, document__slug__id=None, document__title__id=None, document__license_url=None, cost_in_gp=10.5, weight=None, bonus=1, author_user_id=1, weapon_damage_rolls=[{'dice_no': 2, 'die_sides': 12, 'damage_type': 2, 'flat_damage': None, 'weapon_slug': 'hacksaw'}], weapon_property_assignments=[6,7])
 
