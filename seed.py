@@ -976,7 +976,7 @@ comfy_sweater = Armor.create_armor(
   cost_in_gp=10.5, 
   weight=1, 
   stealth_disadvantage=False, 
-  author_user_id=user.id
+  author_user_id=guest.id
 )
 
 new_armor_comment = ArmorComment.add_comment('slug', guest.id, "this is my new  armor joining comment content")
@@ -1014,11 +1014,3 @@ new_modifier = ArmorModifierAttribute.create_armor_modifier_attribute(armor_slug
 
 db.session.commit()
 
-
-
-print(user.to_json())
-print(armor_comment.to_json())
-print(weapon_comment.to_json())
-print(spell_comment.to_json())
-print(class_comment.to_json())
-print(Armor.get_comments(new_armor_comment.slug))
