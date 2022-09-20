@@ -11,6 +11,7 @@ armor = Blueprint('armor', __name__, template_folder='templates')
 
 @armor.route('/')
 def get_armors():
+  """Get all armors from API and local db"""
   response = requests.get(BASE_URL + 'armor')
   armors = response.json()['results']
   
@@ -18,15 +19,11 @@ def get_armors():
   compat_armors = []
   for armor in db_armors:
     armor_dict = json.loads(armor.to_compat_json())
-    # armor.ac_string = armor_dict['ac_string']
-    # armor.category = armor_dict['category']
-    # armor.strength_requirement = armor_dict['strength_requirement']
     armor_dict['author'] = armor.author
     compat_armors.append(armor_dict)
 
   armors += compat_armors
 
-  # armors += Armor.query.all()
   form = ArmorForm(my_creation=True)
   return render_template('armor_list.jinja', armors=armors, form=form)
 
@@ -43,7 +40,6 @@ def get_armor(slug):
   if response:
     armor = response.json()
   else:
-    # armor = json.loads(Armor.to_compat_json(Armor.query.get(slug)))
     found_armor = Armor.query.get(slug)
     if not found_armor:
       return render_template("404.jinja")
@@ -66,8 +62,10 @@ def get_armor(slug):
 
 @armor.route('/new', methods=['POST'])
 def add_armor():
+  """Create a new piece of armor, show errors or redirect to new armor on success"""
 
   def rerender_failed_form():
+    """helper function to rerender on any failure"""
     flash("Failed to create Armor")
     response = requests.get(BASE_URL + 'armor')
     armors = response.json()['results']
@@ -80,7 +78,6 @@ def add_armor():
       compat_armors.append(armor_dict)
 
     armors += compat_armors
-
     return render_template('armor_list.jinja', armors=armors, form=form)
   
   form = ArmorForm()
@@ -109,7 +106,6 @@ def add_armor():
     modifier_attributes = [modifier.label.text for modifier in mod_fields if modifier.data is True]
 
     if valid:
-
       try:
         new_armor = Armor.create_armor(slug=form.slug.data,
                                       name=form.name.data,
@@ -129,12 +125,10 @@ def add_armor():
         flash("Armor Created!")
         return redirect(f'/armor/{form.slug.data}')
       except Exception as e:
-        print(e)
         return rerender_failed_form()
     else:
       return rerender_failed_form()
   else:
-    # form.validate_on_submit failed
     return rerender_failed_form()
 
 

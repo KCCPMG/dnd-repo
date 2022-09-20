@@ -31,8 +31,10 @@ def get_classes():
 
 @classes.route('/new', methods=['POST'])
 def add_class():
-  
+  """Create new player class, either show errors or redirect to new page on success"""
+
   def rerender_failed_form():
+    """helper function to rerender on any failure"""
     flash("Failed to create Class")
     response = requests.get(BASE_URL + 'classes')
     player_classes = response.json()['results']
@@ -46,8 +48,8 @@ def add_class():
       compat_classes.append(pc_dict)
 
     player_classes += compat_classes
-
     return render_template('class_list.jinja', player_classes=compat_classes, form=form)
+
 
   form = PlayerClassForm()
 
@@ -95,7 +97,6 @@ def add_class():
       spellcasting_ability = Attribute.query.filter(Attribute.name == form.spellcasting_ability.data).one().id
 
     if valid:
-
       try:
         new_pc = PlayerClass.create_player_class(
           slug=form.slug.data,
@@ -118,21 +119,15 @@ def add_class():
           saving_throw_ids = saving_throw_ids,
         )
 
-
         db.session.commit()
         flash("Class Created!")
         return redirect(f'/classes/{form.slug.data}')
       
       except Exception as e:
-        print(e)
         return rerender_failed_form()
-
     else:
-      print(form.errors)
       return rerender_failed_form()
-
   else:
-    print(form.errors)
     return rerender_failed_form()
 
 

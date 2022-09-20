@@ -2,14 +2,16 @@ from flask import render_template, flash, redirect
 from forms import WeaponForm, CommentForm
 import json
 import requests
-from models import db, Weapon, WeaponCategory, WeaponProperty, WeaponComment
+from models import db, Weapon, WeaponCategory, WeaponProperty, WeaponComment, DamageType
 from flask import Blueprint, g
 from utils import get_comment_time, BASE_URL
 
 weapons = Blueprint('weapons', __name__, template_folder='templates')
 
-@weapons.route('/weapons', methods=['GET'])
+@weapons.route('/', methods=['GET'])
 def get_weapons():
+  """Get all weapons from API and local db"""
+
   response = requests.get(BASE_URL + 'weapons')
   weapon_results = response.json()['results']
   weapons = [json.loads(Weapon.api_doc_to_compat_json(wr)) for wr in weapon_results]
@@ -30,8 +32,10 @@ def get_weapons():
 
 @weapons.route('/new', methods=['POST'])
 def add_weapon():
+  """Create new weapon, either show errors or return redirect to new weapon page on success"""
 
   def rerender_failed_form():
+    """helper function to rerender on any failure"""
     flash("Failed to create Weapon")
     response = requests.get(BASE_URL + 'weapons')
     weapon_results = response.json()['results']
@@ -60,7 +64,6 @@ def add_weapon():
     elif Weapon.query.get(form.slug.data):
       form.slug.errors.append("URL is not unique")
       valid = False
-
 
     ammo_property = None
     thrown_property = None
@@ -139,10 +142,8 @@ def add_weapon():
 
     # get weapon category
     weapon_category_id = WeaponCategory.query.filter(WeaponCategory.name==form.weapon_category.data).one().id
-
+    
     weapon_damage_rolls = []
-
-
     if form.first_weapon_damage_dice_no.data or form.first_weapon_damage_flat_damage.data:
       damage_type_id = DamageType.query.filter(DamageType.name==form.first_weapon_damage_type.data).one().id
       weapon_damage_rolls.append({
@@ -192,30 +193,15 @@ def add_weapon():
 
         db.session.commit()
         flash("Weapon Created!")
-        return redirect("/weapons")
-
+        return redirect(f"/weapons/{form.slug.data}")
 
       except Exception as e:
-        print(e)
-        # flash("Failed to create Weapon")
         return rerender_failed_form()
-        # for error in form.errors:
-        #   flash(error)
-        # return redirect('/weapons')
     else:
-      # flash("Failed to create Weapon")
       return rerender_failed_form()
-      # flash("failed validation")
-      # for error in form.errors:
-      #   flash(error)
-      # return redirect('/weapons')
   else:
-    # flash("Failed to create Weapon")
     return rerender_failed_form()
-    # flash("failed validation")
-    # for error in form.errors:
-    #   flash(error)
-    # return redirect('/weapons')
+
 
 
 
@@ -251,6 +237,7 @@ def get_weapon(slug):
     comment_form=comment_form, 
     form_action=f"/weapons/{slug}/add-comment"
   )
+
 
 @weapons.route('/<slug>/add-comment', methods=['POST'])
 def add_weapon_comment(slug):

@@ -1,8 +1,5 @@
 $('document').ready(function(){
 
-  console.log('ready');
-  console.log($('#armor-form-container').is(':hidden'))
-
   $('.toggle-armor-form-button').click(function(e){
     if ($('#armor-form-container').is(':hidden')) {
       $('#armor-form-container').removeAttr('hidden')

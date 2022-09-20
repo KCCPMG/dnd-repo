@@ -1,8 +1,5 @@
 $('document').ready(function(){
 
-  console.log('ready');
-  console.log($('#player-class-form-container').is(':hidden'))
-
   $('.toggle-player-class-form-button').click(function(e){
     if ($('#player-class-form-container').is(':hidden')) {
       $('#player-class-form-container').removeAttr('hidden')

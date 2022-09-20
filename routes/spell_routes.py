@@ -10,6 +10,7 @@ spells = Blueprint('spells', __name__, template_folder='templates')
 
 @spells.route('/', methods=['GET'])
 def get_spells():
+  """Get all spells from API and local db"""
   response = requests.get(BASE_URL + 'spells/?limit=1000')
   spells = response.json()['results']
 
@@ -28,8 +29,10 @@ def get_spells():
 
 @spells.route('/new', methods=['POST'])
 def add_spell():
-  
+  """Create new spell and either show errors, or on success redirect to new spell page"""
+
   def rerender_failed_form():
+    """helper function to rerender on any failure"""
     flash("Failed to create Spell")
     response = requests.get(BASE_URL + 'spells')
     spells = response.json()['results']
@@ -65,7 +68,6 @@ def add_spell():
     if form.spell_component_m.data:
       spell_components.append("M")
 
-
     magic_school_id = MagicSchool.query.filter(MagicSchool.name == form.magic_school.data).one().id
 
     try:
@@ -92,12 +94,10 @@ def add_spell():
                         archetype_spell_assignments=[])
       db.session.commit()
       flash("Spell Created!")
-      return redirect("/spells")
+      return redirect(f"/spells/{form.slug.data}")
     except Exception as e:
-      print(e)
       return rerender_failed_form()
   else:
-    print(form.errors)
     return rerender_failed_form()
 
 

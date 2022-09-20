@@ -1,4 +1,3 @@
-
 $('document').ready(function(){
 
   $('.toggle-comment-form-button').click(function(e){

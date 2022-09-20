@@ -58,7 +58,6 @@ def check_doc_slug_id(slug_id, allow_none=False):
   if not type(slug_id) is int:
     raise TypeError("slug_id must be of type int")
 
-
   if not isinstance(DocumentSlug.query.get(slug_id), DocumentSlug):
     raise ValueError("Invalid document__slug__id")
 
@@ -337,9 +336,9 @@ class WeaponComment(db.Model):
     primary_key=True
   )
 
+  # not a foreign key, but works similarly
   slug = db.Column(
     db.Text,
-    # db.ForeignKey('weapons.slug')
   )
 
   author_user_id = db.Column(

@@ -5,16 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">  
   <link rel="stylesheet" href="/static/style.css">
 
   <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 
-
   {% block head_content %}
   {% endblock %}
 
+  <link rel="icon" href="/static/crossed-swords_39260.ico" type="image/icon type">
   <title>Dragon's Hoard</title>
 </head>
 <body>
@@ -30,7 +29,18 @@
         </a>
       </div>
       <ul class="navbar-nav">
-
+        <li>
+          <a class="nav-text nav-link" href="/armor">Armor</a>
+        </li>
+        <li>
+          <a class="nav-text nav-link" href="/weapons">Weapons</a>
+        </li>
+        <li>
+          <a class="nav-text nav-link" href="/spells">Spells</a>
+        </li>
+        <li>
+          <a class="nav-text nav-link" href="/classes">Classes</a>
+        </li>
         {% if g.user %}
           <li>
             <a class="nav-text nav-link" href="/logout">Logout</a>
@@ -38,7 +48,7 @@
         {% endif %}
       </ul>
 
-      </div>
+      
     </div>
 
   </nav>

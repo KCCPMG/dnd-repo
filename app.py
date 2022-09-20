@@ -1,4 +1,4 @@
-from flask import Flask, redirect,render_template, flash, session, g
+from flask import Flask, redirect, render_template, flash, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 import os
 
