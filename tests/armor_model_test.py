@@ -3,7 +3,6 @@ from unittest import TestCase
 from sqlalchemy import exc
 import requests
 
-
 from models import db, User, ArmorComment, WeaponComment, SpellComment, ClassComment, Armor, ArmorCategory, DamageType, WeaponDamageRoll, WeaponProperty, WeaponPropertyAssignment, WeaponCategory, Weapon, Attribute, DocumentSlug, DocumentTitle, DocumentLicenseURL, SpellComponent, ClassSpellSlugAssignment, ArchetypeSpellAssignment, MagicSchool, Spell, PlayerClass, WeaponProficiency, SavingThrow
 
 from tests.test_seed import run_test_seed
@@ -11,9 +10,6 @@ from tests.test_seed import run_test_seed
 os.environ['DATABASE_URL'] = "postgresql:///dnd-repo-test"
 
 from app import app
-
-
-
 
 def delete_all():
   User.query.delete() 
@@ -43,104 +39,13 @@ def delete_all():
   SavingThrow.query.delete()
 
 
-def seed():
-  
-  db.session.add_all([
-    # armor types
-    ArmorCategory(name='No Armor'), 
-    ArmorCategory(name='Light Armor'), 
-    ArmorCategory(name='Medium Armor'),
-    ArmorCategory(name="Heavy Armor"), 
-    ArmorCategory(name='Spell'),
-    ArmorCategory(name='Class Feature'), 
-    ArmorCategory(name='Shield'),  
-    
-    # weapon categories
-    WeaponCategory(name='Simple Melee Weapons'), 
-    WeaponCategory(name='Simple Ranged Weapons'), 
-    WeaponCategory(name='Martial Melee Weapons'), 
-    WeaponCategory(name='Martial Ranged Weapons'),
-
-    # damage types
-    DamageType(name='bludgeoning'),
-    DamageType(name='piercing'),
-    DamageType(name='slashing'),
-    DamageType(name='acid'),
-    DamageType(name='poison'),
-    DamageType(name='fire'),
-    DamageType(name='cold'),
-    DamageType(name='force'),
-    DamageType(name='lightning'),
-    DamageType(name='thunder'),
-    DamageType(name='necrotic'),
-    DamageType(name='psychic'),
-    DamageType(name='radiant'),
-
-    # weapon properties (need to enable adding more)
-    WeaponProperty(name='ammunition (range 30/120)'),
-    WeaponProperty(name='ammunition (range 25/100)'),
-    WeaponProperty(name='ammunition (range 100/400)'),
-    WeaponProperty(name='ammunition (range 150/600)'),
-    WeaponProperty(name='finesse'),
-    WeaponProperty(name='heavy'),
-    WeaponProperty(name='light'),
-    WeaponProperty(name='loading'),
-    WeaponProperty(name='range'),
-    WeaponProperty(name='reach'),
-    WeaponProperty(name='special'),
-    WeaponProperty(name='thrown (range 5/15)'),
-    WeaponProperty(name='thrown (range 20/60)'),
-    WeaponProperty(name='thrown (range 30/120)'),
-    WeaponProperty(name='two-handed'),
-    WeaponProperty(name='versatile (1d8)'),
-    WeaponProperty(name='versatile (1d10)'),
-
-    # magic schools
-    MagicSchool(name='illusion'),
-    MagicSchool(name='transmutation'),
-    MagicSchool(name='conjuration'),
-    MagicSchool(name='necromancy'),
-    MagicSchool(name='evocation'),
-    MagicSchool(name='abjuration'),
-    MagicSchool(name='enchantment'),
-    MagicSchool(name='divination'),
-
-    # attributes
-    Attribute(name='Strength'),
-    Attribute(name='Dexterity'),
-    Attribute(name='Constitution'),
-    Attribute(name='Wisdom'),
-    Attribute(name='Intelligence'),
-    Attribute(name='Charisma'),
-
-    # documents slugs
-    DocumentSlug(slug='wotc-srd'),
-    DocumentSlug(slug='dmag'),
-    DocumentSlug(slug='o5e'),
-
-    # document titles
-    DocumentTitle(title='Systems Reference Document'),
-    DocumentTitle(title='Deep Magic for 5th Edition'),
-    DocumentTitle(title='Open5e OGL'),
-
-    # document license urls
-    DocumentLicenseURL(url='http://open5e.com/legal')
-  ])
-  db.session.commit()
-
 
 
 class ArmorTest(TestCase):
   """Test construction for success and failure, json method"""
 
-
   def setUp(self):
-    # db.session.rollback()
-    # delete_all()
-    # db.drop_all()
-    # db.create_all()
     run_test_seed()
-    
     self.sample_user = User.create_user('sample@user.com','sampleuser', 'test123')
 
   
@@ -151,6 +56,7 @@ class ArmorTest(TestCase):
   # valid construction
   def test_construction(self):
     """Test Class method create_armor with several different configurations"""
+    # omit modifier_attribute
     new_armor = Armor.create_armor(slug="slug", 
                                    name="Slug", 
                                    category_id=3, 
@@ -550,24 +456,6 @@ class ArmorTest(TestCase):
 
 
 
-class WeaponTest(TestCase):
-
-  def setUp(self):
-    db.session.rollback()
-    delete_all()
-    
-    sample_user = User.create_user('sample@user.com','sampleuser', 'test123')
-
-  def tearDown(self) -> None:
-    return super().tearDown()
-  
-  # valid construction
-  # self.assertEqual(2+2, 4)
-  # invalid construction 
-
-  # relationships
-
-  # to_compat_json
 
 
 

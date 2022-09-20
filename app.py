@@ -27,13 +27,11 @@ connect_db(app)
 
 CURR_USER_KEY = 'current_user_id'
 
-
 def login(user):
   session[CURR_USER_KEY] = user.id
 
 def logout():
   del session[CURR_USER_KEY]
-
 
 @app.before_request
 def get_user():
@@ -55,7 +53,7 @@ def get_404(e):
 
 @app.route('/', methods=['GET'])
 def get_index():
-
+  """if no user, send to login/signup page, otherwise send to 'home'"""
   if g.user:
     return redirect('/home')
 
@@ -65,7 +63,7 @@ def get_index():
 
 @app.route('/login', methods=['POST'])
 def get_user():
-  
+  """handle login attempt"""
   form = LoginForm()
 
   if form.validate_on_submit():
@@ -84,6 +82,7 @@ def get_user():
 
 @app.route('/login-guest', methods=['GET'])
 def get_guest():
+  """Allow a user to log in as the guest account, allow for site tours without requiring signup"""
   user = User.query.filter(User.username == "guest").one()
   session[CURR_USER_KEY] = user.id
   flash(f"Hello, {user.username}!", "success")
@@ -92,7 +91,7 @@ def get_guest():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-
+  """Log out a user"""
   if g.user:
     del session[CURR_USER_KEY]
     g.user = None
@@ -101,13 +100,13 @@ def logout():
 
 @app.route('/home')
 def get_home():
-
+  """render homepage"""
   return render_template('home.jinja')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def handle_signup():
-
+  """render signup form, handle signup attempt"""
   form = SignupForm()
 
   if g.user:
@@ -129,7 +128,8 @@ def handle_signup():
     if valid is True:
       try:
         user = User.create_user(email=form.email.data, 
-                                username=form.username.data,unhashed_password=form.password.data)
+                                username=form.username.data,
+                                unhashed_password=form.password.data)
         db.session.commit()
         session[CURR_USER_KEY] = user.id
         flash(f"Welcome to Dragon's Hoard, {user.username}!")
@@ -143,8 +143,8 @@ def handle_signup():
   else:
     return render_template("signup_form.jinja", form=form)
 
-############ Armor ############
 
+############ Armor ############
 
 from routes.armor_routes import armor
 app.register_blueprint(armor, url_prefix="/armor")

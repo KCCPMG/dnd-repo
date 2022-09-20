@@ -308,8 +308,6 @@ class WeaponTest(TestCase):
     )
 
     my_greatsword_json = my_greatsword.to_compat_json()
-    # print(my_greatsword_json)    
-
 
     f = open('tests/api_greatsword.json', 'w')
     f.write(api_greatsword_json)
@@ -324,4 +322,3 @@ class WeaponTest(TestCase):
     for key in api_greatsword_dict.keys():
       self.assertEqual(api_greatsword_dict[key], my_greatsword_dict[key])
     
-    # self.assertEqual(api_greatsword_json, my_greatsword_json)

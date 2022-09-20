@@ -1,7 +1,3 @@
-import email
-from unicodedata import category
-from xml.dom import ValidationErr
-from click import password_option
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SelectField, IntegerRangeField, BooleanField, IntegerField, FloatField
 from wtforms.validators import DataRequired, Email, Length, Optional, EqualTo, ValidationError
@@ -22,31 +18,6 @@ def SlugFormatRequired(form, field):
 
   if len(re.findall("[a-zA-Z0-9\-_]", field.data)) != len(field.data):
     raise ValidationError("Please use only letters, numbers, and the characters '-' and '_' in the slug")
-
-
-
-
-
-
-
-# def RequirementDependency(form, field, comp_field):
-#   if comp_field.data:
-#     return DataRequired()(form, field)
-#   else:
-#     return Optional()(form, field)
-
-
-# not working, disable, check later
-def RequirementDependency(comp_field):
-
-  def dependency_check(form, field):
-    if comp_field.data:
-      return DataRequired()(form, field)
-    else:
-      return Optional()(form, field)
-
-  return dependency_check
-
 
 
 ############ Forms ############
@@ -94,7 +65,6 @@ class ArmorForm(FlaskForm):
   weight = FloatField("Weight (In lbs.)", validators=[Optional()])
   stealth_disadvantage = BooleanField("Stealth Disadvantage?")
   
-
 
 
 class WeaponForm(FlaskForm): 
@@ -150,8 +120,6 @@ class WeaponForm(FlaskForm):
   third_weapon_damage_type = SelectField("Damage Type", choices=['', 'bludgeoning', 'piercing', 'slashing', 'acid', 'poison', 'fire', 'cold', 'force', 'lightning', 'thunder', 'necrotic', 'psychic', 'radiant'])
 
 
-
-
 class SpellForm(FlaskForm): 
   slug = StringField("URL", validators=[DataRequired(message="URL is required"), SlugFormatRequired])
   name = StringField("Name", validators=[DataRequired(message="Name is required")])
@@ -171,7 +139,6 @@ class SpellForm(FlaskForm):
   spell_component_s = BooleanField("Somatic (S)")
   spell_component_m = BooleanField("Material (M)")
   
-
 
 class PlayerClassForm(FlaskForm):
   slug = StringField("URL", validators=[DataRequired(message="URL is required"), SlugFormatRequired])

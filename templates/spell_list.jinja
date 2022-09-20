@@ -15,8 +15,6 @@
       </div>
     </div>
 
-
-
     <form id="spell-form-container" class="create-form-container" hidden action="/spells/new" method="POST">
 
       <h2>Create Spell</h2>
@@ -260,7 +258,6 @@
       {% for error in form.higher_level.errors %}
         <span class="text-danger">{{ error }}</span>
       {% endfor %}
-
 
       <div class="row m-2 justify-content-center">
         <button class="btn btn-outline-dark" type="Submit">

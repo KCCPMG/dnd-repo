@@ -1,7 +1,7 @@
 from app import db
 from models import *
 
-# db.session.rollback()
+
 db.drop_all()
 db.create_all()
 
@@ -859,7 +859,6 @@ db.session.add_all([
   WeaponCategory(name='Martial Melee Weapons'), 
   WeaponCategory(name='Martial Ranged Weapons'),
 
-
   # damage types
   DamageType(name='bludgeoning'),
   DamageType(name='piercing'),
@@ -874,7 +873,6 @@ db.session.add_all([
   DamageType(name='necrotic'),
   DamageType(name='psychic'),
   DamageType(name='radiant'),
-
 
   # weapon properties (need to enable adding more)
   WeaponProperty(name='ammunition (range 30/120)'),
@@ -894,8 +892,6 @@ db.session.add_all([
   WeaponProperty(name='versatile (1d8)'),
   WeaponProperty(name='versatile (1d10)'),
 
-
-
   # magic schools
   MagicSchool(name='illusion'),
   MagicSchool(name='transmutation'),
@@ -906,7 +902,6 @@ db.session.add_all([
   MagicSchool(name='enchantment'),
   MagicSchool(name='divination'),
 
-
   # attributes
   Attribute(name='Strength'),
   Attribute(name='Dexterity'),
@@ -914,9 +909,6 @@ db.session.add_all([
   Attribute(name='Wisdom'),
   Attribute(name='Intelligence'),
   Attribute(name='Charisma'),
-
-  # skills
-  # Skill(name='')
 
   # documents slugs
   DocumentSlug(slug='wotc-srd'),

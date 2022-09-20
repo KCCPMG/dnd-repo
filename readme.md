@@ -47,7 +47,7 @@ Note: This also means that 'archetypes' as far as spells are concerned will just
 
 ## Future Features
 
-The following features are in consideration for future releases:
+The following features and fixes are in consideration for future releases:
 
 - Allow users to click on a page from home to see their own creations and comments
 - See other users' items and comments (by user)
@@ -60,3 +60,4 @@ The following features are in consideration for future releases:
 - Refactor views to cut down on repetition
 - Split documents across multiple pages (ie 10 per page on the list view)
 - Add other items (tools, races, languages, etc.)
+- Create more graceful error handling in models methods

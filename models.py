@@ -259,7 +259,6 @@ class User(db.Model):
     return False
 
 
-
 class ArmorComment(db.Model):
 
   __tablename__ = 'armor_comments'
@@ -271,9 +270,9 @@ class ArmorComment(db.Model):
     primary_key=True
   )
 
+  # not a foreign key, but works similarly
   slug = db.Column(
     db.Text
-    # db.ForeignKey('armor.slug')
   )
 
   author_user_id = db.Column(
@@ -290,8 +289,6 @@ class ArmorComment(db.Model):
     nullable=False,
     default=datetime.utcnow()
   )
-
-  ############ Relationships ############
 
   ############ Methods ############
 
@@ -356,8 +353,6 @@ class WeaponComment(db.Model):
     default=datetime.utcnow()
   )
 
-  ############ Relationships ############
-
   ############ Methods ############
 
   def to_json(self):
@@ -389,7 +384,6 @@ class WeaponComment(db.Model):
     return comment
 
 
-
 class SpellComment(db.Model):
 
   __tablename__ = 'spell_comments'
@@ -401,9 +395,9 @@ class SpellComment(db.Model):
     primary_key=True
   )
 
+  # not a foreign key, but works similarly
   slug = db.Column(
-    db.Text,
-    # db.ForeignKey('spells.slug')
+    db.Text
   )
 
   author_user_id = db.Column(
@@ -420,8 +414,6 @@ class SpellComment(db.Model):
     nullable=False,
     default=datetime.utcnow()
   )
-
-  ############ Relationships ############
 
   ############ Methods ############
 
@@ -465,9 +457,9 @@ class ClassComment(db.Model):
     primary_key=True
   )
 
+  # not a foreign key, but works similarly
   slug = db.Column(
     db.Text,
-    # db.ForeignKey('player_classes.slug')
   )
 
   author_user_id = db.Column(
@@ -484,8 +476,6 @@ class ClassComment(db.Model):
     nullable=False,
     default=datetime.utcnow()
   )
-
-  ############ Relationships ############
 
   ############ Methods ############
 
@@ -521,7 +511,6 @@ class ClassComment(db.Model):
 class Armor(db.Model):
 
   __tablename__ = "armor"
-
 
   ############ Columns ############
   
@@ -641,13 +630,11 @@ class Armor(db.Model):
     except:
       pass
 
-
     ac_string = ""
     ac_base_str = str(self.ac_base) or ""
     
     modifier_str = ""
     try:
-      # modifier_str = Attribute.query.get(self.modifier_attribute_id).name
       modifier_str = " + ".join([(attribute.name[0:3] + " modifier") for attribute in self.modifier_attributes])
     except:
       pass
@@ -662,7 +649,6 @@ class Armor(db.Model):
       ac_string = ac_base_str + modifier_str
     ac_string += max_modifier_str
 
-
     cost_str = ""
     if self.cost_in_gp != None:
       if self.cost_in_gp == int(self.cost_in_gp):
@@ -670,14 +656,12 @@ class Armor(db.Model):
       else:
         cost_str = f"{self.cost_in_gp} gp"
 
-
     weight_str = ""
     if self.weight != None:
       if self.weight == int(self.weight):
         weight_str = f"{int(self.weight)} lbs."
       else:
         weight_str = f"{self.weight} lbs."
-
 
     return json.dumps({
       "name": self.name,
@@ -711,7 +695,6 @@ class Armor(db.Model):
     check_doc_title_id(document__title__id, allow_none=user_created_doc)
     check_doc_license_url(document__license_url, allow_none=user_created_doc)
     check_int(ac_base, "ac_base", allow_none=True)
-    # check_attribute_id(modifier_attribute_id)
     check_int(max_modifier, "max_modifier", allow_none=True)
     check_int(strength_required, "strength_required", allow_none=True)
     check_float(cost_in_gp, "cost_in_gp", allow_none=True)
@@ -779,10 +762,6 @@ class ArmorModifierAttribute(db.Model):
     db.ForeignKey('attributes.id')
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
   ############ Class Methods ############
 
   @classmethod
@@ -823,11 +802,6 @@ class ArmorCategory(db.Model):
     nullable=False
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
-  ############ Class Methods ############
 
 
 class DamageType(db.Model):
@@ -846,11 +820,6 @@ class DamageType(db.Model):
     nullable=False
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
-  ############ Class Methods ############
 
 
 class WeaponDamageRoll(db.Model):
@@ -888,10 +857,6 @@ class WeaponDamageRoll(db.Model):
     db.ForeignKey('weapons.slug')
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
   ############ Class Methods ############
   @classmethod
   def create_roll(cls, dice_no, die_sides, flat_damage, damage_type, weapon_slug):
@@ -903,13 +868,11 @@ class WeaponDamageRoll(db.Model):
     try:
       DamageType.query.get(damage_type)
     except:
-      # print(f"DamageType {damage_type} (type {type(damage_type)}) not found")
       raise exc.IntegrityError(f"DamageType {damage_type} not found")
 
     try:
       Weapon.query.get(weapon_slug)
     except:
-      print(f"Weapon {weapon_slug} not found")
       raise exc.IntegrityError(f"Weapon {weapon_slug} not found")
 
     weapon_damage_roll = WeaponDamageRoll(dice_no=dice_no,
@@ -925,7 +888,6 @@ class WeaponProperty(db.Model):
 
   __tablename__ = "weapon_properties"
 
-
   ############ Columns ############
   id = db.Column(
     db.Integer,
@@ -937,11 +899,6 @@ class WeaponProperty(db.Model):
     nullable=False
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
-  ############ Class Methods ############
 
 
 class WeaponPropertyAssignment(db.Model):
@@ -964,10 +921,6 @@ class WeaponPropertyAssignment(db.Model):
     db.Text,
     db.ForeignKey('weapons.slug')
   )
-
-  ############ Relationships ############
-
-  ############ Methods ############
 
   ############ Class Methods ############
   @classmethod
@@ -1008,12 +961,6 @@ class WeaponCategory(db.Model):
     db.Text,
     nullable=False
   )
-
-  ############ Relationships ############
-
-  ############ Methods ############
-
-  ############ Class Methods ############
 
 
 class Weapon(db.Model):
@@ -1244,7 +1191,6 @@ class Weapon(db.Model):
       except Exception as e:
         db.session.rollback()
         raise e
-        raise ValueError(f"Weapon Damage Roll {wdr} is invalid")
 
     if not type(weapon_property_assignments) is list:
       db.session.rollback()
@@ -1273,7 +1219,6 @@ class Weapon(db.Model):
     return json.dumps(api_doc)
 
 
-
 class Attribute(db.Model):
   
   __tablename__ = 'attributes'
@@ -1289,12 +1234,6 @@ class Attribute(db.Model):
     db.Text,
     nullable=False
   )
-
-  ############ Relationships ############
-
-  ############ Methods ############
-
-  ############ Class Methods ############
 
 
 class DocumentSlug(db.Model):
@@ -1348,9 +1287,6 @@ class DocumentLicenseURL(db.Model):
   )
 
 
-
-
-
 class SpellComponent(db.Model):
 
   __tablename__ = "spell_components"
@@ -1372,10 +1308,6 @@ class SpellComponent(db.Model):
     db.ForeignKey('spells.slug'),
     nullable=False
   )
-
-  ############ Relationships ############
-
-  ############ Methods ############
 
   ############ Class Methods ############
   @classmethod
@@ -1412,10 +1344,6 @@ class ClassSpellSlugAssignment(db.Model):
     db.Text,
     db.ForeignKey('spells.slug')
   )
-
-  ############ Relationships ############
-
-  ############ Methods ############
 
   ############ Class Methods ############
   @classmethod
@@ -1459,11 +1387,6 @@ class ArchetypeSpellAssignment(db.Model):
     db.ForeignKey('spells.slug')
   )
 
-
-  ############ Relationships ############
-
-  ############ Methods ############
-
   ############ Class Methods ############
   @classmethod
   def create_archetype_spell_assignment(cls, archetype, spell_slug):
@@ -1476,6 +1399,7 @@ class ArchetypeSpellAssignment(db.Model):
       assignment = ArchetypeSpellAssignment(archetype=archetype, spell_slug=spell_slug)
       db.session.add(assignment)
       return assignment
+
 
 class MagicSchool(db.Model):
 
@@ -1493,12 +1417,6 @@ class MagicSchool(db.Model):
     nullable=False
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
-  ############ Class Methods ############
-  
 
 class Spell(db.Model):
   
@@ -1604,11 +1522,7 @@ class Spell(db.Model):
 
   spell_components = db.relationship('SpellComponent', backref='spells')
 
-  # classes = db.relationship('PlayerClass',
-  #   secondary='class_spell_slug_assignments',
-  #   backref='spells'
-  # )
-
+  # for future implementation
   archetypes = db.relationship('ArchetypeSpellAssignment',
     backref='spells'
   )
@@ -1692,9 +1606,6 @@ class Spell(db.Model):
       "author_user_id": self.author_user_id
     })
 
-
-
-
   ############ Class Methods ############
   
   @classmethod
@@ -1727,7 +1638,6 @@ class Spell(db.Model):
 
     user_created_doc = bool(author_user_id)
 
-
     check_slug(slug)
     check_boolean(ritual, "ritual")
     check_boolean(concentration, "concentration")
@@ -1737,7 +1647,6 @@ class Spell(db.Model):
     check_doc_title_id(document__title__id, allow_none=user_created_doc)
     check_doc_license_url(document__license_url, allow_none=user_created_doc)
     check_user_id(author_user_id, allow_none=(not user_created_doc))
-
     
     spell = Spell(
       slug=slug,
@@ -1785,7 +1694,6 @@ class Spell(db.Model):
       except Exception as e:
         db.session.rollback()
         raise e
-        raise ValueError(f"Class Slug Spell Assignment {cssa} is invalid")
 
     # create archetype spell assignments
     if not type(archetype_spell_assignments) is list:
@@ -1800,7 +1708,6 @@ class Spell(db.Model):
         raise ValueError(f"ArchetypeSpellAssignment \"{arch_assignment}\" is invalid")
 
     return spell
-
 
 
   @classmethod
@@ -1871,11 +1778,6 @@ class PlayerClass(db.Model):
     nullable=True
   )
 
-  # archetypes = db.Column(
-  #   db.Text,
-  #   nullable=True
-  # )
-
   prof_weapons = db.Column(
     db.Text,
     nullable=False
@@ -1913,12 +1815,6 @@ class PlayerClass(db.Model):
     backref = "player_class"
   )
 
-  # weapon_proficiencies = db.relationship(
-  #   'WeaponCategory',
-  #   secondary = 'weapon_proficiencies',
-  #   backref = "player_class"
-  # )
-
   saving_throws = db.relationship(
     'Attribute',
     secondary = 'saving_throws',
@@ -1948,8 +1844,6 @@ class PlayerClass(db.Model):
     higher_lvl_hp_str = "1d"+str(self.base_hp_at_1st_level)
     higher_lvl_hp_str += f" (or {int((self.base_hp_at_1st_level + 2)/2)})"
     higher_lvl_hp_str += f" + your Constitution modifier per {self.name} level after 1st"
-
-    # weapon_prof_str = ", ".join([wp.name for wp in self.weapon_proficiencies])
 
     saving_throw_str = ", ".join([st.name for st in self.saving_throws])
 
@@ -2008,7 +1902,6 @@ class PlayerClass(db.Model):
       "author_user_id": author_str
     })
 
-
   ############ Class Methods ############
 
   @classmethod
@@ -2049,7 +1942,6 @@ class PlayerClass(db.Model):
     check_doc_title_id(document__title__id, allow_none=user_created_doc)
     check_doc_license_url(document__license_url, allow_none=user_created_doc)
     check_user_id(author_user_id, allow_none=(not user_created_doc))
-
     
     player_class = PlayerClass(
       slug=slug,
@@ -2072,11 +1964,6 @@ class PlayerClass(db.Model):
     )
 
     db.session.add(player_class)
-
-
-    # if not isinstance(player_class, PlayerClass):
-    #   db.session.rollback()
-    #   raise ValueError("Failed to create PlayerClass")
     
     # create armor_proficiencies
     for armor_proficiency in armor_proficiencies:
@@ -2140,10 +2027,6 @@ class WeaponProficiency(db.Model):
     db.ForeignKey('player_classes.slug')
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
   ############ Class Methods ############
   @classmethod
   def create_weapon_proficiency(cls, weapon_category_id, class_slug):
@@ -2181,10 +2064,6 @@ class ArmorProficiency(db.Model):
     db.Text,
     db.ForeignKey('player_classes.slug')
   )
-
-  ############ Relationships ############
-
-  ############ Methods ############
 
   ############ Class Methods ############
   @classmethod
@@ -2225,10 +2104,6 @@ class SavingThrow(db.Model):
     db.ForeignKey('player_classes.slug')
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
   ############ Class Methods ############
   @classmethod
   def create_saving_throw(cls, attribute_id, class_slug):
@@ -2262,10 +2137,6 @@ class APISpell(db.Model):
     nullable=False
   )
 
-  ############ Relationships ############
-
-  ############ Methods ############
-
   ############ Class Methods ############
   @classmethod
   def create_api_spell(cls, slug, name):
@@ -2276,7 +2147,6 @@ class APISpell(db.Model):
     )
     db.session.add(api_spell)
     return api_spell
-
 
 
 class ClassSlugAPISpellAssignment(db.Model):
@@ -2300,10 +2170,6 @@ class ClassSlugAPISpellAssignment(db.Model):
     db.Text,
     db.ForeignKey('player_classes.slug')
   )
-
-  ############ Relationships ############
-
-  ############ Methods ############
 
   ############ Class Methods ############
   @classmethod

@@ -947,20 +947,6 @@ def run_test_seed():
 
   class_comment = ClassComment.add_comment('class', user.id, "this is my class comment content")
 
-  # new_armor = Armor.create_armor(slug="slug", 
-  #                                 name="Slug", 
-  #                                 category_id=3, 
-  #                                 document__slug__id=1, 
-  #                                 document__title__id=1, 
-  #                                 document__license_url=1, 
-  #                                 ac_base=5, 
-  #                                 modifier_attributes=["Dexterity", "Wisdom"],
-  #                                 max_modifier=2, 
-  #                                 strength_required=12, 
-  #                                 cost_in_gp=0, 
-  #                                 stealth_disadvantage=False, 
-  #                                 author_user_id=user.id)
-
   comfy_sweater = Armor.create_armor(
     slug="comfy-sweater", 
     name="Comfortable Sweater", 
@@ -977,8 +963,6 @@ def run_test_seed():
     stealth_disadvantage=False, 
     author_user_id=user.id
   )
-
-  # new_armor_comment = ArmorComment.add_comment('slug', user.id, "this is my new  armor joining comment content")
 
   hacksaw = Weapon.create_weapon(slug='hacksaw', name='Hacksaw', weapon_category=3, document__slug__id=None, document__title__id=None, document__license_url=None, cost_in_gp=10.5, weight=None, bonus=1, author_user_id=1, weapon_damage_rolls=[{'dice_no': 2, 'die_sides': 12, 'damage_type': 2, 'flat_damage': None, 'weapon_slug': 'hacksaw'}], weapon_property_assignments=[6,7])
 
@@ -1006,10 +990,6 @@ def run_test_seed():
     homebrew_spell_slugs = ['make-explode'],
     api_spell_slugs = ["doom-of-serpent-coils", "doom-of-blue-crystal"]
   )
-
-  # db.session.add_all([new_armor_comment])
-
-  # new_modifier = ArmorModifierAttribute.create_armor_modifier_attribute(armor_slug="slug", attribute="Strength")
 
   db.session.commit()
 
